@@ -4,7 +4,7 @@
             
             <!-- LOGO -->
             <a class="navbar-brand" href="#">
-                <img src="/vite.svg" alt="Bootstrap" width="30" height="24">
+                <img class="ms_img" src="logo-boolbnb-nero.png" alt="Bootstrap">
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -46,6 +46,10 @@
         flex-grow: 0;
     }
 
+    .ms_img {
+        max-width: 10%;
+    }
+
 }
 .submit-bottom{
     background-color: #177E89;
@@ -53,5 +57,6 @@
     // padding: 10px;
     // width: 70px;
 }
+
 
 </style>
