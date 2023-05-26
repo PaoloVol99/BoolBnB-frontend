@@ -3,8 +3,8 @@
         <div class="container">
             
             <!-- LOGO -->
-            <a class="navbar-brand" href="#">
-                <img class="ms_img" src="logo-boolbnb-nero.png" alt="Bootstrap">
+            <a class="navbar-brand ms_navbar-brand" href="#">
+                <img class="ms_img" src="logo-boolbnb-nero.png" alt="Logo">
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -58,17 +58,14 @@
         background-color: $primary-color;
     }
 
-    .ms_img {
-        max-width: 10%;
+    .ms_navbar-brand {
+        width: 120px;
     }
 
 }
 .submit-bottom{
     background-color: #177E89;
     color: rgb(247, 247, 247) !important;
-    // padding: 10px;
-    // width: 70px;
 }
-
 
 </style>
