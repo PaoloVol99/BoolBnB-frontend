@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tomtom-international/web-sdk-plugin-searchbox": "^3.2.0",
     "axios": "^1.4.0",
     "bootstrap": "^5.2.3",
     "sass": "^1.62.1",
