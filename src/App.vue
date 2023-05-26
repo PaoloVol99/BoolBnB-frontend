@@ -2,12 +2,14 @@
 
 import Header from './components/Header.vue';
 import Footer from './components/Footer.vue';
+import Searchbar from './components/Searchbar.vue'
 
 export default {
+  
   components: {
     Footer,
-    Header
-
+    Header,
+    Searchbar
   },
   }
 </script>
@@ -16,7 +18,9 @@ export default {
 
   <Header />
 
-<Footer></Footer>
+  <Searchbar />
+
+  <Footer />
 
 </template>
 
