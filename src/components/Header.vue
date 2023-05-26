@@ -12,7 +12,7 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav">
+                <ul class="navbar-nav align-items-center">
 
                     <li class="nav-item mx-2">
                     <a class="nav-link active" aria-current="page" href="#">Home</a>
@@ -44,6 +44,18 @@
     padding: 20px 0;
     .navbar-collapse{
         flex-grow: 0;
+    }
+    .navbar-toggler:focus{
+        box-shadow: 0 0 10px $primary-color;
+    }
+    .nav-link:hover{
+        color: $primary-color;
+    }
+    .submit-bottom{
+        padding: 5px 20px;
+    }
+    .submit-bottom:hover{
+        background-color: $primary-color;
     }
 
     .ms_img {
