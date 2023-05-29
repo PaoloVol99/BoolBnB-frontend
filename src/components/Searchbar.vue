@@ -21,6 +21,7 @@ import axios from 'axios'
             return {
                 searchBox: '',
                 results: [],
+                city: ''
             }
         },
         methods: { 
@@ -44,15 +45,20 @@ import axios from 'axios'
             }},
             selectResult(i) {
                 let result = this.results[i].address.freeformAddress
+                this.city = this.results[i].address.municipality
                 console.log(result)
                 this.searchBox = result
                 this.results = []
 
 
             },
-            // fetchApartments() {
-            //     axios.get('')
-            // }
+            fetchApartments() {
+                console.log("chiamata")
+                axios.get(`http://127.0.0.1:8000/api/apartments/city/${this.city}`)
+                .then ((res) =>{
+                    console.log("api db", res.data.results)
+                })
+            }
         }
     }
 </script>
