@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from "vue-router";
 
 import Home from './pages/Home.vue';
+import Advance_search from './pages/Advance_search.vue';
 
 const router = createRouter({
     history: createWebHistory(),
@@ -9,6 +10,11 @@ const router = createRouter({
             path: '/',
             name: 'home',
             component: Home
+        },
+        {
+            path: '/ricerca-avanzata',
+            name: 'ricerca-avanzata',
+            component: Advance_search
         }
     ]
 })
