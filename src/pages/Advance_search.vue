@@ -38,7 +38,7 @@ import store from '../store';
         Default 
     },
     mounted() {
-        console.log("store", this.store.city)
+        
     }
 }
 </script>

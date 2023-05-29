@@ -25,11 +25,29 @@ import store from '../store'
             return {
                 searchBox: '',
                 results: [],
+                poiList: [],
+                poiListFormatted: [],
+                geometryFilter: [],
                 city: '',
                 store
             }
         },
         methods: { 
+            fetchApartmentsRadius(){
+                axios.get("https://api.tomtom.com/search/2/geometryFilter.json",
+                {
+                    params:{
+                        key: '5yE1GYuQA7WyAdPZ1zAeJtBq8cKtoae3',
+                        geometryList: JSON.stringify(this.geometryFilter),
+                        poiList: JSON.stringify(this.poiList)
+
+                    }
+                })
+                .then ((res)=>{
+                    console.log("risultato", res.data)
+                })
+                console.log("funzione ok", JSON.stringify(this.geometryFilter))
+            },
             fetchResults() {
                 if (this.searchBox != '') {
                 axios.get(`https://api.tomtom.com/search/2/search/${this.searchBox}.json`, 
@@ -53,20 +71,67 @@ import store from '../store'
                 this.city = this.results[i].address.municipality
                 this.store.city = this.city
                 console.log(result)
-                console.log("store", store)
                 this.searchBox = result
-                this.results = []
+                console.log("results", this.results)
 
+                let createFilter = {
+                    "type": "CIRCLE",
+                    "position": this.results[i].position.lat + "," + this.results[i].position.lon,
+                    "radius": 20000
+                }
+
+                this.geometryFilter.push(createFilter)
+
+                console.log("create filter geometry", createFilter)
+                this.results = []
 
             },
             fetchApartments() {
                 console.log("chiamata")
-                axios.get(`http://127.0.0.1:8000/api/apartments/city/${this.city}`)
+                axios.get('http://127.0.0.1:8000/api/apartments')
                 .then ((res) =>{
-                    console.log("api db", res.data.results)
+                    // console.log("api db", res.data.results)
                     this.store.apartments = res.data.results
+
+                    this.poiList = res.data.results
+                    // console.log("poiList", this.poiList)
+
+                    this.poiList.forEach((apartment)=>{
+                        let apartmentFormatted = {
+                            "poi":{
+                                "name": apartment.title
+                            },
+                            "address":{
+                                "freeformAddress": apartment.address + ", " + apartment.city
+                            },
+                            "position": {
+                                "lat": apartment.lat,
+                                "lon": apartment.lng
+                            }
+
+                        }
+
+                        this.poiListFormatted.push(apartmentFormatted)
+
+                    })
+
+                    console.log("poi formatted", this.poiListFormatted)
+
+                    if (res.data.success) {
+                        this.fetchApartmentsRadius()
+                    }
                 })
+
             }
+            // ,
+            // fetchApartments() {
+            //     console.log("chiamata")
+            //     axios.get(`http://127.0.0.1:8000/api/apartments/city/${this.city}`)
+            //     .then ((res) =>{
+            //         console.log("api db", res.data.results)
+            //         this.store.apartments = res.data.results
+            //     })
+            // }
         }
     }
 </script>
