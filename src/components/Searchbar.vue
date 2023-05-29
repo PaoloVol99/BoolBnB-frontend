@@ -3,12 +3,15 @@
         <div class="container">
             <div class="ms_form-container position-relative">
                 <input class="ms_input" v-model="searchBox" @keyup="fetchResults()" type="text">
-                <div class="ms_autocomplete-container position-absolute">
-                    <div class="autocomplete" v-for="(result, i) in results" @click="selectResult(i)">
+                <div class="ms_autocomplete-container position-absolute z-index-2">
+                    <div class="autocomplete z-index-2" v-for="(result, i) in results" @click="selectResult(i)">
                         {{ result.address.freeformAddress }}
                     </div>
                 </div>
-                <button class="btn btn-primary rounded-pill" @click="fetchApartments()">Cerca</button>
+                <!-- <button class="btn btn-primary rounded-pill" @click="fetchApartments()">Cerca</button> -->
+                <router-link :to="{ name:'ricerca-avanzata'}">
+                    <button class="btn btn-primary rounded-pill" @click="fetchApartments()">Cerca</button>
+                </router-link>
             </div>
         </div>
     </div>
@@ -16,11 +19,14 @@
 
 <script>
 import axios from 'axios'
+import store from '../store'
     export default {
         data() {
             return {
                 searchBox: '',
                 results: [],
+                city: '',
+                store
             }
         },
         methods: { 
@@ -44,15 +50,23 @@ import axios from 'axios'
             }},
             selectResult(i) {
                 let result = this.results[i].address.freeformAddress
+                this.city = this.results[i].address.municipality
+                this.store.city = this.city
                 console.log(result)
+                console.log("store", store)
                 this.searchBox = result
                 this.results = []
 
 
             },
-            // fetchApartments() {
-            //     axios.get('')
-            // }
+            fetchApartments() {
+                console.log("chiamata")
+                axios.get(`http://127.0.0.1:8000/api/apartments/city/${this.city}`)
+                .then ((res) =>{
+                    console.log("api db", res.data.results)
+                    this.store.apartments = res.data.results
+                })
+            }
         }
     }
 </script>

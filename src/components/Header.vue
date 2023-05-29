@@ -15,11 +15,11 @@
                 <ul class="navbar-nav align-items-center">
 
                     <li class="nav-item mx-2">
-                    <a class="nav-link active" aria-current="page" href="#">Home</a>
+                    <router-link class="nav-link active" :to="{ name:'home' }">Home</router-link>
                     </li>
 
                     <li class="nav-item mx-2">
-                    <a class="nav-link active" aria-current="page" href="#">Ricerca avanzata</a>
+                    <router-link class="nav-link active" :to="{ name:'ricerca-avanzata' }">Ricerca avanzata</router-link>
                     </li>
 
                     <li class="nav-item mx-2">
