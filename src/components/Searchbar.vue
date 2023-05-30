@@ -3,13 +3,13 @@
         <div class="container">
             <div class="ms_form-container position-relative">
                 <input class="ms_input" v-model="searchBox" @keyup="fetchResults()" type="text">
-                <div class="ms_autocomplete-container position-absolute">
-                    <div class="autocomplete" v-for="(result, i) in results" @click="selectResult(i)">
+                <div class="ms_autocomplete-container position-absolute z-index-2">
+                    <div class="autocomplete z-index-2" v-for="(result, i) in results" @click="selectResult(i)">
                         {{ result.address.freeformAddress }}
                     </div>
                 </div>
                 <!-- <button class="btn btn-primary rounded-pill" @click="fetchApartments()">Cerca</button> -->
-                <router-link :to="{ name:'ricerca-avanzata'}">
+                <router-link :to="{ name: 'ricerca-avanzata' }">
                     <button class="btn btn-primary rounded-pill" @click="fetchApartments()">Cerca</button>
                 </router-link>
             </div>
@@ -20,88 +20,179 @@
 <script>
 import axios from 'axios'
 import store from '../store'
-    export default {
-        data() {
-            return {
-                searchBox: '',
-                results: [],
-                poiList: [],
-                poiListFormatted: [],
-                geometryFilter: [],
-                city: '',
-                store
-            }
-        },
-        methods: { 
-            fetchApartmentsRadius(){
-                axios.get("https://api.tomtom.com/search/2/geometryFilter.json",
-                {
-                    params:{
-                        key: '5yE1GYuQA7WyAdPZ1zAeJtBq8cKtoae3',
-                        geometryList: JSON.stringify(this.geometryFilter),
-                        poiList: JSON.stringify(this.poiList)
+export default {
+    data() {
+        return {
+            searchBox: '',
+            results: [],
+            poiList: [],
+            poiListFormatted: [],
+            geometryFilter: [],
+            city: '',
+            store
+        }
+    },
+    methods: {
+        fetchApartmentsRadius() {
 
-                    }
+            let data = JSON.stringify({
+                "geometryList": this.geometryFilter,
+                "poiList": this.poiListFormatted
+            });
+
+            let config = {
+                method: 'post',
+                maxBodyLength: Infinity,
+                url: 'https://api.tomtom.com/search/2/geometryFilter.json?key=5yE1GYuQA7WyAdPZ1zAeJtBq8cKtoae3',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                data: data
+            };
+
+            axios.request(config)
+                .then((response) => {
+                    console.log("risultato", response.data);
                 })
-                .then ((res)=>{
-                    console.log("risultato", res.data)
-                })
-                console.log("funzione ok", JSON.stringify(this.geometryFilter))
-            },
-            fetchResults() {
-                if (this.searchBox != '') {
-                axios.get(`https://api.tomtom.com/search/2/search/${this.searchBox}.json`, 
-                {
-                    params: {
-                        key: '5yE1GYuQA7WyAdPZ1zAeJtBq8cKtoae3',
-                        countrySet: 'IT',
-                        language: 'it-IT',
-                        limit: 5
-                    }
-                })
-                .then ((res) => {
-                    console.log(res.data.results)
-                    this.results = res.data.results
-                })
+                .catch((error) => {
+                    console.log(error);
+                });
+
+            // const json = {
+
+            //     poiList: [
+
+            //         {
+            //             poi: {
+            //                 name: "S Restaurant Tom's"
+            //             },
+
+            //             address: {
+            //                 freeFormAddress: "2880 Broadway, New York, NY 10025"
+            //             },
+
+            //             position: {
+            //                 lat: 40.80558,
+            //                 lon: -73.96548
+            //             }
+
+
+            //         },
+
+            //         {
+            //             poi: {
+            //                 name: "Yasha Raman Corporation"
+            //             },
+
+            //             address: {
+            //                 freeFormAddress: "940 Amsterdam Ave, New York, NY 10025"
+            //             },
+
+            //             position: {
+            //                 lat: 40.80076,
+            //                 lon: -73.96556
+            //             }
+
+
+            //         },
+            //     ],
+
+            //     geometryList: [
+            //         {
+            //             type: "CIRCLE",
+            //             position: "40.80558, -73.96548",
+            //             radius: 100
+            //         },
+            //         {
+            //             type: "POLIGON",
+            //             vertices: [
+            //                 "37.7524152343544, -122.43576049804686",
+            //                 "37.70660472542312, -122.43301391601562",
+            //                 "37.712059855877314, -122.36434936523438",
+            //                 "37.75350561243041, -122.37396240234374"
+            //             ]
+            //         }
+            //     ]
+
+            // }
+
+            // const jsonFormatted = JSON.stringify(json)
+
+            // axios.get("https://api.tomtom.com/search/2/geometryFilter.json?key=5yE1GYuQA7WyAdPZ1zAeJtBq8cKtoae3", jsonFormatted,
+            //     {
+            //         // params:{
+            //         //     key: '5yE1GYuQA7WyAdPZ1zAeJtBq8cKtoae3',
+            //         //     geometryList: JSON.stringify(this.geometryFilter),
+            //         //     poiList: JSON.stringify(this.poiList)
+
+            //         // }
+
+            //         headers: {
+            //             'accept': '*/*',
+            //             'Content-Type': 'application/json'
+            //         }
+            //     })
+            //     .then((res) => {
+            //         console.log("risultato", res.data)
+            //         console.log("json", json)
+            //     })
+            // console.log("funzione ok", JSON.stringify(this.geometryFilter))
+        },
+        fetchResults() {
+            if (this.searchBox != '') {
+                axios.get(`https://api.tomtom.com/search/2/search/${this.searchBox}.json`,
+                    {
+                        params: {
+                            key: '5yE1GYuQA7WyAdPZ1zAeJtBq8cKtoae3',
+                            countrySet: 'IT',
+                            language: 'it-IT',
+                            limit: 5
+                        }
+                    })
+                    .then((res) => {
+                        console.log(res.data.results)
+                        this.results = res.data.results
+                    })
             } else {
                 this.results = []
-            }},
-            selectResult(i) {
-                let result = this.results[i].address.freeformAddress
-                this.city = this.results[i].address.municipality
-                this.store.city = this.city
-                console.log(result)
-                this.searchBox = result
-                console.log("results", this.results)
+            }
+        },
+        selectResult(i) {
+            let result = this.results[i].address.freeformAddress
+            this.city = this.results[i].address.municipality
+            this.store.city = this.city
+            console.log(result)
+            this.searchBox = result
+            console.log("results", this.results)
 
-                let createFilter = {
-                    "type": "CIRCLE",
-                    "position": this.results[i].position.lat + "," + this.results[i].position.lon,
-                    "radius": 20000
-                }
+            let createFilter = {
+                "type": "CIRCLE",
+                "position": this.results[i].position.lat + "," + this.results[i].position.lon,
+                "radius": 20000
+            }
 
-                this.geometryFilter.push(createFilter)
+            this.geometryFilter.push(createFilter)
 
-                console.log("create filter geometry", createFilter)
-                this.results = []
+            console.log("create filter geometry", createFilter)
+            this.results = []
 
-            },
-            fetchApartments() {
-                console.log("chiamata")
-                axios.get('http://127.0.0.1:8000/api/apartments')
-                .then ((res) =>{
+        },
+        fetchApartments() {
+            console.log("chiamata")
+            axios.get('http://127.0.0.1:8000/api/apartments')
+                .then((res) => {
                     // console.log("api db", res.data.results)
                     this.store.apartments = res.data.results
 
                     this.poiList = res.data.results
                     // console.log("poiList", this.poiList)
 
-                    this.poiList.forEach((apartment)=>{
+                    this.poiList.forEach((apartment) => {
                         let apartmentFormatted = {
-                            "poi":{
+                            "poi": {
                                 "name": apartment.title
                             },
-                            "address":{
+                            "address": {
                                 "freeformAddress": apartment.address + ", " + apartment.city
                             },
                             "position": {
@@ -122,94 +213,93 @@ import store from '../store'
                     }
                 })
 
-            }
-            // ,
-            // fetchApartments() {
-            //     console.log("chiamata")
-            //     axios.get(`http://127.0.0.1:8000/api/apartments/city/${this.city}`)
-            //     .then ((res) =>{
-            //         console.log("api db", res.data.results)
-            //         this.store.apartments = res.data.results
-            //     })
-            // }
         }
+        // ,
+        // fetchApartments() {
+        //     console.log("chiamata")
+        //     axios.get(`http://127.0.0.1:8000/api/apartments/city/${this.city}`)
+        //     .then ((res) =>{
+        //         console.log("api db", res.data.results)
+        //         this.store.apartments = res.data.results
+        //     })
+        // }
     }
+}
 </script>
 
 <style lang="scss" scoped>
 @use '../style/partials/variables.scss' as *;
 
-    .ms_form-container {
-        display: flex;
-        align-items: center;
-        margin: 0 auto;
+.ms_form-container {
+    display: flex;
+    align-items: center;
+    margin: 0 auto;
+}
+
+.ms_autocomplete-container {
+    width: 90%;
+    left: 20px;
+    top: 80px;
+    margin-top: -18px;
+}
+
+.ms_input {
+    width: 90%;
+    margin: 20px;
+    display: block;
+    background-color: rgb(234, 234, 234);
+    border: none;
+    color: black;
+    border-radius: 999px;
+    padding: 8px 25px;
+
+    &:focus-visible {
+        outline: 2px solid $primary-color;
+    }
+}
+
+.autocomplete {
+    // width: 90%;
+    // margin: 0 auto;
+    display: block;
+    // border-radius: 10px;
+    // border-top: 1px solid rgb(205, 205, 205);
+    cursor: pointer;
+    padding: 8px 25px;
+    background-color: white;
+    // &::after {
+    //     content: '';
+    //     display: block;
+    //     background-color: rgb(205, 205, 205);
+    //     width: 70%;
+    //     height: 1px;
+    //     margin: 8px auto 0;
+    // }
+
+    &:first-of-type {
+        border-top: none;
+        border-radius: 10px 10px 0 0;
     }
 
-    .ms_autocomplete-container {
-        width: 90%;
-        left: 20px;
-        top: 80px;
-        margin-top: -18px;
-        z-index: 999;
+    &:last-of-type {
+        border-bottom: 1px solid rgb(205, 205, 205);
+        margin-bottom: 10px;
+        border-radius: 0 0 10px 10px;
     }
-    .ms_input {
-        width: 90%;
-        margin: 20px;
-        display: block;
-        background-color: rgb(234, 234, 234);
+}
+
+.autocomplete:hover {
+    // border-radius: 10px;
+    background-color: rgb(235, 235, 235);
+    padding-bottom: 8px;
+    border: none;
+
+    &+.autocomplete {
         border: none;
-        color: black;
-        border-radius: 999px;
-        padding: 8px 25px;
-
-        &:focus-visible {
-            outline: 2px solid $primary-color;
-        }
     }
 
-    .autocomplete {
-        // width: 90%;
-        // margin: 0 auto;
-        display: block;
-        // border-radius: 10px;
-        // border-top: 1px solid rgb(205, 205, 205);
-        cursor: pointer;
-        padding: 8px 25px;
-        background-color: white;
-        // &::after {
-        //     content: '';
-        //     display: block;
-        //     background-color: rgb(205, 205, 205);
-        //     width: 70%;
-        //     height: 1px;
-        //     margin: 8px auto 0;
-        // }
-
-        &:first-of-type {
-            border-top: none;
-            border-radius: 10px 10px 0 0;
-        }
-
-        &:last-of-type {
-            border-bottom: 1px solid rgb(205, 205, 205);
-            margin-bottom: 10px;
-            border-radius: 0 0 10px 10px;
-        }
-    }
-
-    .autocomplete:hover {
-        // border-radius: 10px;
-        background-color: rgb(235, 235, 235);
-        padding-bottom: 8px;
-        border: none;
-
-        &+.autocomplete {
-            border: none;
-        }
-
-        // &::after {
-        //     display: none;
-        // }
-    }
-
+    // &::after {
+    //     display: none;
+    // }
+}
 </style>
