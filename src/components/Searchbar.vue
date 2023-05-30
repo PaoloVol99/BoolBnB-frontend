@@ -29,10 +29,12 @@ export default {
             poiListFormatted: [],
             geometryFilter: [],
             city: '',
-            store
+            store,
+            radius: '' // cosi possiamo mettere il parametro che vogliamo 
         }
     },
     methods: {
+
         fetchApartmentsRadius() {
 
             let data = JSON.stringify({
@@ -57,87 +59,87 @@ export default {
                 .catch((error) => {
                     console.log(error);
                 });
+        }
+        // const json = {
 
-            // const json = {
+        //     poiList: [
 
-            //     poiList: [
+        //         {
+        //             poi: {
+        //                 name: "S Restaurant Tom's"
+        //             },
 
-            //         {
-            //             poi: {
-            //                 name: "S Restaurant Tom's"
-            //             },
+        //             address: {
+        //                 freeFormAddress: "2880 Broadway, New York, NY 10025"
+        //             },
 
-            //             address: {
-            //                 freeFormAddress: "2880 Broadway, New York, NY 10025"
-            //             },
-
-            //             position: {
-            //                 lat: 40.80558,
-            //                 lon: -73.96548
-            //             }
-
-
-            //         },
-
-            //         {
-            //             poi: {
-            //                 name: "Yasha Raman Corporation"
-            //             },
-
-            //             address: {
-            //                 freeFormAddress: "940 Amsterdam Ave, New York, NY 10025"
-            //             },
-
-            //             position: {
-            //                 lat: 40.80076,
-            //                 lon: -73.96556
-            //             }
+        //             position: {
+        //                 lat: 40.80558,
+        //                 lon: -73.96548
+        //             }
 
 
-            //         },
-            //     ],
+        //         },
 
-            //     geometryList: [
-            //         {
-            //             type: "CIRCLE",
-            //             position: "40.80558, -73.96548",
-            //             radius: 100
-            //         },
-            //         {
-            //             type: "POLIGON",
-            //             vertices: [
-            //                 "37.7524152343544, -122.43576049804686",
-            //                 "37.70660472542312, -122.43301391601562",
-            //                 "37.712059855877314, -122.36434936523438",
-            //                 "37.75350561243041, -122.37396240234374"
-            //             ]
-            //         }
-            //     ]
+        //         {
+        //             poi: {
+        //                 name: "Yasha Raman Corporation"
+        //             },
 
-            // }
+        //             address: {
+        //                 freeFormAddress: "940 Amsterdam Ave, New York, NY 10025"
+        //             },
 
-            // const jsonFormatted = JSON.stringify(json)
+        //             position: {
+        //                 lat: 40.80076,
+        //                 lon: -73.96556
+        //             }
 
-            // axios.get("https://api.tomtom.com/search/2/geometryFilter.json?key=5yE1GYuQA7WyAdPZ1zAeJtBq8cKtoae3", jsonFormatted,
-            //     {
-            //         // params:{
-            //         //     key: '5yE1GYuQA7WyAdPZ1zAeJtBq8cKtoae3',
-            //         //     geometryList: JSON.stringify(this.geometryFilter),
-            //         //     poiList: JSON.stringify(this.poiList)
 
-            //         // }
+        //         },
+        //     ],
 
-            //         headers: {
-            //             'accept': '*/*',
-            //             'Content-Type': 'application/json'
-            //         }
-            //     })
-            //     .then((res) => {
-            //         console.log("risultato", res.data)
-            //         console.log("json", json)
-            //     })
-            // console.log("funzione ok", JSON.stringify(this.geometryFilter))
-        },
+        //     geometryList: [
+        //         {
+        //             type: "CIRCLE",
+        //             position: "40.80558, -73.96548",
+        //             radius: 100
+        //         },
+        //         {
+        //             type: "POLIGON",
+        //             vertices: [
+        //                 "37.7524152343544, -122.43576049804686",
+        //                 "37.70660472542312, -122.43301391601562",
+        //                 "37.712059855877314, -122.36434936523438",
+        //                 "37.75350561243041, -122.37396240234374"
+        //             ]
+        //         }
+        //     ]
+
+        // }
+
+        // const jsonFormatted = JSON.stringify(json)
+
+        // axios.get("https://api.tomtom.com/search/2/geometryFilter.json?key=5yE1GYuQA7WyAdPZ1zAeJtBq8cKtoae3", jsonFormatted,
+        //     {
+        //         // params:{
+        //         //     key: '5yE1GYuQA7WyAdPZ1zAeJtBq8cKtoae3',
+        //         //     geometryList: JSON.stringify(this.geometryFilter),
+        //         //     poiList: JSON.stringify(this.poiList)
+
+        //         // }
+
+        //         headers: {
+        //             'accept': '*/*',
+        //             'Content-Type': 'application/json'
+        //         }
+        //     })
+        //     .then((res) => {
+        //         console.log("risultato", res.data)
+        //         console.log("json", json)
+        //     })
+        // console.log("funzione ok", JSON.stringify(this.geometryFilter))
+        ,
         fetchResults() {
             if (this.searchBox != '') {
                 axios.get(`https://api.tomtom.com/search/2/search/${this.searchBox}.json`,
@@ -163,17 +165,16 @@ export default {
             this.store.city = this.city
             console.log(result)
             this.searchBox = result
-            console.log("results", this.results)
+            // console.log("results", this.results)
 
             let createFilter = {
-                "type": "CIRCLE",
-                "position": this.results[i].position.lat + "," + this.results[i].position.lon,
-                "radius": 20000
+                "latitudine": this.results[i].position.lat,
+                "longitudine": this.results[i].position.lon,
             }
 
             this.geometryFilter.push(createFilter)
 
-            console.log("create filter geometry", createFilter)
+            // console.log("create filter geometry", createFilter)
             this.results = []
 
         },
@@ -183,7 +184,7 @@ export default {
                 .then((res) => {
                     // console.log("api db", res.data.results)
                     this.store.apartments = res.data.results
-
+                    // console.log('apartments', this.store.apartments)
                     this.poiList = res.data.results
                     // console.log("poiList", this.poiList)
 
@@ -206,14 +207,62 @@ export default {
 
                     })
 
-                    console.log("poi formatted", this.poiListFormatted)
+                    // console.log("poi formatted", this.poiListFormatted)
 
                     if (res.data.success) {
-                        this.fetchApartmentsRadius()
+                        this.fetchApartmentsRadiusCustom()
                     }
                 })
 
-        }
+        },
+        fetchApartmentsRadiusCustom() {
+            // console.log('geometryfilter', this.geometryFilter[0].latitudine);
+            const latCenter = this.geometryFilter[0].latitudine;
+            const lonCenter = this.geometryFilter[0].longitudine;
+            const radius = 20 * 1000;
+
+            const filteredApartments = [];
+            this.store.apartments.filter((apartment) => {
+                // console.log('latcenter', latCenter)
+                // console.log('loncenter', lonCenter)
+                // console.log('apartment.lat', apartment.lat)
+                // console.log('apartment.lon', apartment.lng)
+                const distance = this.calculateDistance(latCenter, lonCenter, apartment.lat, apartment.lng);
+                // console.log(distance)
+                if (distance <= radius) {
+                    // console.log('ciao sono dentro lif ed ecco la distance', distance)
+                    filteredApartments.push(apartment)
+                }
+            });
+
+            return console.log("Appartamenti filtrati", filteredApartments), filteredApartments;
+
+        },
+        calculateDistance(lat1, lon1, lat2, lon2) {
+            const earthRadius = 6371 * 1000; // Raggio approssimativo della Terra in chilometri
+
+            // Converti le coordinate in radianti
+            const latRad1 = this.degreesToRadians(lat1);
+            const lonRad1 = this.degreesToRadians(lon1);
+            const latRad2 = this.degreesToRadians(lat2);
+            const lonRad2 = this.degreesToRadians(lon2);
+
+            // Calcola la differenza di latitudine e longitudine
+            const dlat = latRad2 - latRad1;
+            const dlon = lonRad2 - lonRad1;
+
+            // Applica la formula di Harversine per calcolare la distanza tra i due punti
+            const a = Math.sin(dlat / 2) ** 2 + Math.cos(latRad1) * Math.cos(latRad2) * Math.sin(dlon / 2) ** 2;
+            const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+            const distance = earthRadius * c;
+            // console.log(distance, 'distanza')
+            return distance;
+        },
+        degreesToRadians(degrees) {
+            // console.log(Math.PI)
+            return degrees * (Math.PI / 180);
+
+        },
         // ,
         // fetchApartments() {
         //     console.log("chiamata")
