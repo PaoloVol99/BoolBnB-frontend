@@ -3,8 +3,8 @@
         <div class="container">
             <div class="ms_form-container position-relative">
                 <input class="ms_input" v-model="searchBox" @keyup="fetchResults()" type="text">
-                <div class="ms_autocomplete-container position-absolute z-index-2">
-                    <div class="autocomplete z-index-2" v-for="(result, i) in results" @click="selectResult(i)">
+                <div class="ms_autocomplete-container position-absolute">
+                    <div class="autocomplete" v-for="(result, i) in results" @click="selectResult(i)">
                         {{ result.address.freeformAddress }}
                     </div>
                 </div>
@@ -150,6 +150,7 @@ import store from '../store'
         left: 20px;
         top: 80px;
         margin-top: -18px;
+        z-index: 999;
     }
     .ms_input {
         width: 90%;
@@ -165,6 +166,7 @@ import store from '../store'
             outline: 2px solid $primary-color;
         }
     }
+
     .autocomplete {
         // width: 90%;
         // margin: 0 auto;
