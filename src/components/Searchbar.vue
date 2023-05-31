@@ -184,7 +184,7 @@ export default {
                 .then((res) => {
                     // console.log("api db", res.data.results)
                     this.store.apartments = res.data.results
-                    // console.log('apartments', this.store.apartments)
+                    // console.log('apartments', JSON.stringify(this.store.apartments))
                     this.poiList = res.data.results
                     // console.log("poiList", this.poiList)
 
