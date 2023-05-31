@@ -91,11 +91,9 @@ import tt from '@tomtom-international/web-sdk-maps'
             })
             console.log(map)
             let marker = new tt.Marker().setLngLat(center)
-            marker.addTo(map);
-            map.fitToCoordinates([center, center], {
-    padding: { top: 50, bottom: 50, left: 50, right: 50 }
-  });
+            marker.addTo(map)
         }
+            
     //     fetchMap() {
     //     axios.get('https://api.tomtom.com/map/1/tile/basic/main/0/0/0.png',
     //         {
@@ -148,10 +146,10 @@ import tt from '@tomtom-international/web-sdk-maps'
 
  }
 
-//  #map-container {
-//     width: 400px;
-//     height: 400px;
-//  }
+ #map-container {
+    width: 400px;
+    height: 400px;
+ }
  
  
  
