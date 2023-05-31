@@ -234,6 +234,8 @@ export default {
                     filteredApartments.push(apartment)
                 }
             });
+            this.store.filteredApartments = filteredApartments
+            console.log("appartamenti filtrati store", this.store.filteredApartments)
 
             return console.log("Appartamenti filtrati", filteredApartments), filteredApartments;
 

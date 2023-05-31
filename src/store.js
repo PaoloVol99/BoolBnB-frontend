@@ -2,7 +2,8 @@ import {reactive} from 'vue';
 
 const store = reactive({
     city: "",
-    apartments: []
+    apartments: [],
+    filteredApartments : []
 })
 
 export default store
