@@ -241,6 +241,7 @@ export default {
     left: 20px;
     top: 80px;
     margin-top: -18px;
+    z-index: 999;
 }
 
 .ms_input {
