@@ -36,8 +36,7 @@
                         <span>{{ apartment.sqm }} &#13217;</span>
                     </div>
                 </div>
-                <div>
-                    
+                <div id="map-container" :ref="mapContainer">
                 </div>
             </div>
 
@@ -53,6 +52,7 @@ import Suggested_holidays from '../components/Suggested_holidays.vue';
 import Featured_accommodation from '../components/Featured_accommodation.vue';
 import axios from 'axios'
 import Default from '../layouts/Default.vue';
+import tt from '@tomtom-international/web-sdk-maps'
 
     export default {
     data() {
@@ -76,24 +76,40 @@ import Default from '../layouts/Default.vue';
                 "slug":"villa-di-lusso-con-vista-mare-e-piscina-privata"
             },
             apiKey: '5yE1GYuQA7WyAdPZ1zAeJtBq8cKtoae3',
-            map: null,
+            mapContainer: this.$refs.mapContainer
+
         };
     },
     methods: {
         fetchMap() {
-        axios.get('https://api.tomtom.com/map/1/tile/basic/main/0/0/0.png',
-            {
-                params: {
-                    key: '5yE1GYuQA7WyAdPZ1zAeJtBq8cKtoae3',
-                    tileSize: 256,
-                    view: 'Unified',
-                    language: 'it-IT'
-            }})
-            .then((res) => {
-                console.log(res.data)
-                this.map = res.data
+            let center = [9.093420, 45.274068]
+            const map = tt.map({
+                key: '5yE1GYuQA7WyAdPZ1zAeJtBq8cKtoae3',
+                container: "map-container",
+                center: center,
+                zoom: 10,
             })
-    }
+            console.log(map)
+            let marker = new tt.Marker().setLngLat(center)
+            marker.addTo(map);
+            map.fitToCoordinates([center, center], {
+    padding: { top: 50, bottom: 50, left: 50, right: 50 }
+  });
+        }
+    //     fetchMap() {
+    //     axios.get('https://api.tomtom.com/map/1/tile/basic/main/0/0/0.png',
+    //         {
+    //             params: {
+    //                 key: '5yE1GYuQA7WyAdPZ1zAeJtBq8cKtoae3',
+    //                 tileSize: 256,
+    //                 view: 'Unified',
+    //                 language: 'it-IT'
+    //         }})
+    //         .then((res) => {
+    //             console.log(res.data)
+    //             this.map = res.data
+    //         })
+    // }
     // fetchApartment() {
     //     axios.get('http://127.0.0.1:8000/api/apartments/attico-moderno-con-vista-mozzafiato')
     //         .then((res) => {
@@ -131,6 +147,11 @@ import Default from '../layouts/Default.vue';
     }
 
  }
+
+//  #map-container {
+//     width: 400px;
+//     height: 400px;
+//  }
  
  
  
