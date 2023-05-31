@@ -15,7 +15,12 @@ const router = createRouter({
             path: '/ricerca-avanzata',
             name: 'ricerca-avanzata',
             component: Advance_search
-        }
+        },
+        // {
+        //     path: '/ricerca-avanzata/slug appartamento',
+        //     name: 'appartamento',
+        //     component: pagina appartamento
+        // }
     ]
 })
 
