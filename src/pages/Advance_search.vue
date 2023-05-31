@@ -37,62 +37,27 @@
 
         <div class="container py-3">
             <div class="row justify-content-center">
-                <!-- <div v-for="apartment in store.apartments" :key="apartment.id" class="card" style="width: 18rem;">
-                    <img class="card-img-top" :src="apartment.cover_image" alt="Card image cap">
-                    <div class="card-body">
-                        <h5 class="card-title">{{apartment.title}}</h5>
-                        <p class="card-text">{{apartment.description}}</p>
-                    </div>
-                </div> -->
-
-                <!-- <div v-for="apartment in store.apartments" :key="apartment.id" class="col-sm-6 col-md-4 col-lg-3 card-spacer ms-col">
+                <div v-for="apartment in store.apartments" :key="apartment.id" class="col-sm-6 col-md-4 col-lg-3 ms-col">
                     <div class="card">
                         <img class="card-img" :src="apartment.cover_image" alt="immagine">
                         <div class="card-description">
                             <h4 class="card-title">{{apartment.title}}</h4>
-                            <p class="card-location">Napoli, NA</p>
-                            <div class="icon-info">
-                                <div class="card-icon-summary">
-                                    <font-awesome-icon icon="far fa-file-alt" />
-                                    <p>5</p>
-                                </div>
-                                <div class="card-icon-summary">
-                                    <font-awesome-icon icon="fa-regular fa-user" />
-                                    <p>8</p>
-                                </div>
-                                <div class="card-icon-summary">
-                                    <font-awesome-icon icon="fa-regular fa-user" />
-                                    <p>2</p>
-                                </div>
-                                <div class="card-icon-summary">
-                                    <p>23&euro;</p>
-                                </div>
-                            </div>
-                        </div>
-
-                    </div>
-                </div> -->
-                <div v-for="index in 12" :key="index" class="col-sm-6 col-md-4 col-lg-3 ms-col">
-                    <div class="card">
-                        <img class="card-img" src="https://picsum.photos/200/300" alt="immagine">
-                        <div class="card-description">
-                            <h4 class="card-title">Nome appartamento</h4>
-                            <p class="card-location">Napoli, NA</p>
+                            <p class="card-location">{{apartment.city}}</p>
                             <div class="icon-info">
                                 <div class="card-icon-summary">
                                     <font-awesome-icon :icon="['fas', 'bed']" />
-                                    <p>5</p>
+                                    <p>{{apartment.beds}}</p>
                                 </div>
                                 <div class="card-icon-summary">
                                     <font-awesome-icon :icon="['fas', 'user']" />
-                                    <p>8</p>
+                                    <p>{{apartment.beds}}</p>
                                 </div>
                                 <div class="card-icon-summary">
                                     <font-awesome-icon :icon="['fas', 'shower']" />
-                                    <p>2</p>
+                                    <p>{{apartment.bathrooms}}</p>
                                 </div>
                                 <div class="card-price-summary ms-3">
-                                    <p>23&euro;</p>
+                                    <p>{{apartment.price}}euro;</p>
                                 </div>
                             </div>
                         </div>
