@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from "vue-router";
 
 import Home from './pages/Home.vue';
 import Advance_search from './pages/Advance_search.vue';
+import ApartmentDetails from './pages/ApartmentDetails.vue';
 
 const router = createRouter({
     history: createWebHistory(),
@@ -16,11 +17,11 @@ const router = createRouter({
             name: 'ricerca-avanzata',
             component: Advance_search
         },
-        // {
-        //     path: '/ricerca-avanzata/slug appartamento',
-        //     name: 'appartamento',
-        //     component: pagina appartamento
-        // }
+        {
+            path: '/dettaglio-appartamento',
+            name: 'dettaglio-appartamento',
+            component: ApartmentDetails
+        }
     ]
 })
 
