@@ -86,7 +86,7 @@
 
 
 
-
+        <!-- Lista appartamenti -->
         <div class="container py-3">
             <div class="row justify-content-center">
                 <div v-for="apartment in store.filteredApartments" :key="apartment.id" class="col-sm-6 col-md-4 col-lg-3 ms-col">
@@ -113,7 +113,6 @@
                                 </div>
                             </div>
                         </div>
-
                     </router-link>
                 </div>
             </div>
@@ -157,6 +156,9 @@ import axios from 'axios';
             .then((res)=>{
                 this.services = res.data.results
             })
+        },
+        filterApartments(){
+            // filtrare gli appartamenti
         }
     },
     created() {
