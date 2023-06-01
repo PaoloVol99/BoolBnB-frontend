@@ -36,9 +36,7 @@
                     </div>
                 </div>
 
-                <div id="map-container" :ref="mapContainer">
-
-
+                <div id="map-container">
 
                 </div>
             </div>
@@ -80,7 +78,7 @@ export default {
                 "slug": "villa-di-lusso-con-vista-mare-e-piscina-privata"
             },
             apiKey: '5yE1GYuQA7WyAdPZ1zAeJtBq8cKtoae3',
-            mapContainer: this.$refs.mapContainer
+            // mapContainer: this.$refs.mapContainer
 
         };
     },
@@ -95,8 +93,13 @@ export default {
                 zoom: 10,
             })
             console.log(map)
-            let marker = new tt.Marker().setLngLat(center)
-            marker.addTo(map)
+            map.on('load', ()=> {
+                let marker = new tt.Marker().setLngLat(center).addTo(map)
+                console.log(marker)
+
+            })
+            // let marker = new tt.Marker().setLngLat(center)
+            // marker.addTo(map)
         }
         //     axios.get('https://api.tomtom.com/map/1/tile/basic/main/0/0/0.png',
         //         {
@@ -130,7 +133,9 @@ export default {
 }
 </script>
 
+
 <style lang="scss" scoped>
+
 // TEMPORANEO
 .spec {
     &::after {
@@ -142,16 +147,18 @@ export default {
         margin-right: 8px;
         margin-left: 3px;
     }
-
+    
     &:last-child::after {
         display: none;
     }
-
-
+    
+    
 }
 
 #map-container {
     width: 400px;
     height: 400px;
+
 }
+
 </style>
