@@ -7,6 +7,8 @@ export default {
             name: '',
             email: '',
             text: '',
+            success: false,
+            errors: null
         }
     },
     props: {
@@ -16,16 +18,19 @@ export default {
         }
     },
     methods: {
-        sendForm() {
-            console.log('funziono')
-            const data = {
-                name: this.name,
-                email: this.email,
-                text: this.text,
-                apartment_id: this.apartment_id
-            }
-            console.log(data)
-        }
+        // sendForm() {
+        //     let data = {
+        //         name: this.name,
+        //         email: this.email,
+        //         text: this.text,
+        //         apartment_id: this.apartment_id,
+        //     }
+        //     console.log(data)
+        //     axios.post("http://127.0.0.1:8000/api/messages", data)
+        //         .then((res) => {
+        //             console.log(data, 'sono data')
+        //         })
+        // }
     }
 }
 </script>
