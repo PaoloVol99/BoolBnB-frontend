@@ -11,7 +11,7 @@
         <div class="container">
             <div class="ms-filters">
                 <Searchbar class="searchbar"></Searchbar>
-                <input class="input_number display-tablet-desktop" type="number" id="beds" name="beds" placeholder="Numero di letti">
+                <input v-model="bedsFilter" class="input_number display-tablet-desktop" type="number" id="beds" name="beds" placeholder="Numero di letti">
                 <a class="btn ms-button ms-3" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
                 Altri filtri
                 </a>
@@ -31,22 +31,22 @@
 
                     <div class="filter-section display-only-mobile">
                         <h5>Numero di letti</h5>
-                        <input class="input_number ms-filter-canvas" type="number" id="beds" name="beds" placeholder="1">
+                        <input v-model="bedsFilter" class="input_number ms-filter-canvas" type="number" id="beds" name="beds" placeholder="1">
                     </div>
                     
                     <div class="filter-section">
                         <h5>Numero di stanze</h5>
-                        <input class="input_number ms-filter-canvas" type="number" id="rooms" name="rooms" placeholder="1">
+                        <input v-model="roomsFilter" class="input_number ms-filter-canvas" type="number" id="rooms" name="rooms" placeholder="1">
                     </div>
 
                     <div class="filter-section">
                         <h5>Numero di bagni</h5>
-                        <input class="input_number ms-filter-canvas" type="number" id="bathrooms" name="bathrooms" placeholder="1">
+                        <input v-model="bathroomsFilter" class="input_number ms-filter-canvas" type="number" id="bathrooms" name="bathrooms" placeholder="1">
                     </div>
 
                     <div class="filter-section">
-                        <h5>Prezzo a notte</h5>
-                        <input class="price-filter" type="range" id="price-filter" name="price-filter" min="50" max="500" step="1" v-model="priceFilter">
+                        <h5>Prezzo minimo a notte</h5>
+                        <input  v-model="priceFilter" class="price-filter" type="range" id="price-filter" name="price-filter" min="20" max="500" step="1">
                         <span id="price-label" class="price-label">{{priceFilter}}&euro;</span>
                     </div>
 
@@ -76,7 +76,7 @@
                     </div>
 
                     <!-- Bottone per applicare i filtri -->
-                    <button class="apply-filters ms-button">Applica filtri</button>
+                    <button class="apply-filters ms-button" @click="filterApartments">Applica filtri</button>
                     
                 </div>
 
@@ -135,13 +135,19 @@ import axios from 'axios';
         return{
             store,
             displayService: "d-none",
-            priceFilter: 50,
-            services: []
+            priceFilter: 20,
+            services: [],
+            bedsFilter: 0,
+            roomsFilter: 0,
+            bathroomsFilter: 0,
         }
     },
     components: { 
         Default,
         Searchbar,
+    },
+    computed: {
+        
     },
     methods: {
         fetchOtherServices(){
@@ -158,7 +164,22 @@ import axios from 'axios';
             })
         },
         filterApartments(){
+
             // filtrare gli appartamenti
+            this.store.filteredApartments = this.store.filteredApartments.filter((apartment) =>{
+                let bedsCondition = (apartment.beds >= this.bedsFilter)
+                let roomsCondition = (apartment.rooms >= this.roomsFilter)
+                let bathroomsCondition = (apartment.bathrooms >= this.bathroomsFilter)
+                let priceCondition = (apartment.price >= this.priceFilter)
+                // filtro per letti
+                if(bedsCondition && roomsCondition && bathroomsCondition && priceCondition){
+                    return true
+                }
+
+            })
+
+            console.log("filtro filtri", this.store.filteredApartments)
+
         }
     },
     created() {
