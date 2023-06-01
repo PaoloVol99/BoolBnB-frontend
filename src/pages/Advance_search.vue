@@ -197,6 +197,7 @@ import axios from 'axios';
 }
 // .searchbar{
 //     margin-right: auto;
+// ciao
 // }
 .price-label {
 display: inline-block;
