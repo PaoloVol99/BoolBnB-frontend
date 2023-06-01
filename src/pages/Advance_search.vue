@@ -10,10 +10,11 @@
             <div class="container">
                 <div class="ms-filters">
                     <Searchbar class="searchbar"></Searchbar>
-                    <input v-model="bedsFilter" class="input_number display-tablet-desktop" type="number" id="beds"
-                        name="beds" placeholder="Numero di letti">
-                    <a class="btn ms-button ms-3" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
-                        aria-controls="offcanvasExample">
+
+                    <label for="beds">Numero di letti</label>
+                    <input v-model="bedsFilter" class="input_number display-tablet-desktop" type="number" id="beds" name="beds">
+
+                    <a class="btn ms-button ms-3" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
                         Altri filtri
                     </a>
                 </div>
@@ -63,8 +64,7 @@
                             <template v-for="(service, index) in services" :key="service.id">
                                 <template v-if="index < 5">
                                     <div class="form-check">
-                                        <input type="checkbox" name="services[]" class="form-check-input"
-                                            :value="service.id" :id="service.id">
+                                        <input type="checkbox" name="serviceFilter[]" class="form-check-input" :value="service.id" :id="service.id" v-model="serviceFilter">
                                         <label for="service" class="form-check-label">{{ service.name }}</label>
                                     </div>
                                 </template>
@@ -73,15 +73,13 @@
                             <template v-for="(service, index) in services" :key="service.id">
                                 <template v-if="index >= 5">
                                     <div :class="[displayService, 'form-check']">
-                                        <input type="checkbox" name="services[]" class="form-check-input"
-                                            :value="service.id" :id="service.id">
+                                        <input type="checkbox" name="serviceFilter[]" class="form-check-input" :value="service.id" :id="service.id" v-model="serviceFilter">
                                         <label for="service" class="form-check-label">{{ service.name }}</label>
                                     </div>
                                 </template>
                             </template>
                             <!-- Bottone per mostrare altri servizi -->
-                            <button class="btn ms-button ms-other-services" @click="fetchOtherServices()">{{ displayService
-                                == "d-none" ? "mostra altri" : "nascondi" }}</button>
+                            <button class="btn ms-button ms-other-services" @click="fetchOtherServices()">{{ displayService == "d-none" ? "mostra altri" : "nascondi" }}</button>
                         </div>
 
                         <!-- Bottone per applicare i filtri -->
@@ -98,8 +96,7 @@
             <!-- Lista appartamenti -->
             <div class="container py-3">
                 <div class="row justify-content-center">
-                    <div v-for="apartment in store.filteredApartments" :key="apartment.id"
-                        class="col-sm-6 col-md-4 col-lg-3 ms-col">
+                    <div v-for="apartment in this.advanceApartments" :key="apartment.id" class="col-sm-6 col-md-4 col-lg-3 ms-col">
                         <router-link :to="{ name: 'dettaglio-appartamento' }" class="card">
                             <img class="card-img" :src="apartment.cover_path" alt="immagine">
                             <div class="card-description">
@@ -111,8 +108,8 @@
                                         <p>{{ apartment.beds }}</p>
                                     </div>
                                     <div class="card-icon-summary">
-                                        <font-awesome-icon class="icon-color" :icon="['fas', 'user']" />
-                                        <p>{{ apartment.beds }}</p>
+                                        <font-awesome-icon class="icon-color" :icon="['fas', 'door-closed']" />
+                                        <p>{{ apartment.rooms }}</p>
                                     </div>
                                     <div class="card-icon-summary">
                                         <font-awesome-icon class="icon-color" :icon="['fas', 'shower']" />
@@ -144,8 +141,10 @@ export default {
         return {
             store,
             displayService: "d-none",
+            advanceApartments: [],
             priceFilter: 20,
             services: [],
+            serviceFilter: [],
             bedsFilter: 0,
             roomsFilter: 0,
             bathroomsFilter: 0,
@@ -174,25 +173,44 @@ export default {
         },
         filterApartments() {
 
-            // filtrare gli appartamenti
-            this.store.filteredApartments = this.store.filteredApartments.filter((apartment) => {
-                let bedsCondition = (apartment.beds >= this.bedsFilter)
-                let roomsCondition = (apartment.rooms >= this.roomsFilter)
-                let bathroomsCondition = (apartment.bathrooms >= this.bathroomsFilter)
-                let priceCondition = (apartment.price >= this.priceFilter)
-                // filtro per letti
-                if (bedsCondition && roomsCondition && bathroomsCondition && priceCondition) {
+            // se non abbiamo selezionato nessun servizio, stampiamo tutti gli appartamenti che riceviamo dalla ricerca
+            if (this.serviceFilter.length == 0) {
+                this.advanceApartments = this.store.filteredApartments
+            } 
+
+            // filtrare gli appartamenti in base ai filtri
+            this.advanceApartments = this.store.filteredApartments.filter((apartment) => {
+                let bedsCondition = apartment.beds >= this.bedsFilter
+                let roomsCondition = apartment.rooms >= this.roomsFilter
+                let bathroomsCondition = apartment.bathrooms >= this.bathroomsFilter
+                let priceCondition = parseFloat(apartment.price) >= this.priceFilter
+                let servicesCondition = true
+                let servicesApartment = apartment.services
+
+                // se abbiamo selezionato dei servizi controlliamo che siano presenti dentro l'appartamento
+                if (this.serviceFilter.length !== 0) {
+                    
+                    servicesCondition = this.serviceFilter.every(value => servicesApartment.some(oggetto => oggetto.id === value));
+
+                    console.log("Appartamenti filtrati per servizi:", servicesCondition);
+  
+                }
+
+                // controlliamo i vari filtri
+                if (bedsCondition && roomsCondition && bathroomsCondition && priceCondition && servicesCondition) {
+                    console.log("entrato")
                     return true
+                }else{
+                    return false
                 }
 
             })
 
-            console.log("filtro filtri", this.store.filteredApartments)
-
         }
     },
     created() {
-        this.fetchServices()
+        this.fetchServices(),
+        this.filterApartments()
     }
 }
 </script>
@@ -206,10 +224,6 @@ export default {
     justify-content: center;
 }
 
-// .searchbar{
-//     margin-right: auto;
-// ciao
-// }
 .price-label {
     display: inline-block;
     width: 50px;

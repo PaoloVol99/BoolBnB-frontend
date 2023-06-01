@@ -15,14 +15,15 @@ import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /* import specific icons */
 // import { } from '@fortawesome/free-regular-svg-icons'
-import {faUser, faBed, faShower} from '@fortawesome/free-solid-svg-icons'
+import {faUser, faBed, faShower, faDoorClosed} from '@fortawesome/free-solid-svg-icons'
 // import {  } from '@fortawesome/free-brands-svg-icons'
 
 /* add icons to the library */
 library.add(
     faUser,
     faBed,
-    faShower
+    faShower,
+    faDoorClosed
 )
 
 
