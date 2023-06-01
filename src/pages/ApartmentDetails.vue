@@ -42,7 +42,22 @@
             </div>
 
         </div>
-        <Message :apartment_id="apartment.id"></Message>
+        <!-- <Message :apartment_id="apartment.id"></Message> -->
+        <div class="container">
+            <form @submit.prevent="sendForm">
+                <div>
+                    <input type="text" v-model="name" name="name">
+                </div>
+                <div>
+                    <input type="text" v-model="email" name="email">
+                </div>
+                <div>
+                    <textarea type="text" v-model="text" name="text"></textarea>
+                </div>
+                <input class="d-none" type="number" v-model="apartment.id">
+                <button type="submit">Invia</button>
+            </form>
+        </div>
 
     </Default>
 </template>
@@ -54,13 +69,13 @@ import Featured_accommodation from '../components/Featured_accommodation.vue';
 import axios from 'axios'
 import Default from '../layouts/Default.vue';
 import tt from '@tomtom-international/web-sdk-maps'
-import Message from '../components/Message.vue'
+
 
 export default {
     data() {
         return {
             apartment: {
-                "id": 2,
+                "id": 108,
                 "user_id": 18,
                 "title": "Villa di Lusso con Vista Mare e Piscina Privata",
                 "rooms": 15,
@@ -77,12 +92,30 @@ export default {
                 "cover_image": "https://via.placeholder.com/640x480.png/009955?text=est",
                 "slug": "villa-di-lusso-con-vista-mare-e-piscina-privata"
             },
+            name: '',
+            email: '',
+            text: '',
+            success: false,
+            errors: null,
             apiKey: '5yE1GYuQA7WyAdPZ1zAeJtBq8cKtoae3',
             // mapContainer: this.$refs.mapContainer
 
         };
     },
     methods: {
+        sendForm() {
+            let data = {
+                name: this.name,
+                email: this.email,
+                text: this.text,
+                apartment_id: this.apartment.id,
+            }
+            console.log(data)
+            axios.post("http://127.0.0.1:8000/api/messages", data)
+                .then((res) => {
+                    console.log(data, 'sono data')
+                })
+        },
         fetchMap() {
 
             let center = [9.093420, 45.274068]
@@ -93,7 +126,7 @@ export default {
                 zoom: 10,
             })
             console.log(map)
-            map.on('load', ()=> {
+            map.on('load', () => {
                 let marker = new tt.Marker().setLngLat(center).addTo(map)
                 console.log(marker)
 
@@ -129,13 +162,12 @@ export default {
     mounted() {
         this.fetchMap();
     },
-    components: { Default, Message }
+    components: { Default }
 }
 </script>
 
 
 <style lang="scss" scoped>
-
 // TEMPORANEO
 .spec {
     &::after {
@@ -147,12 +179,12 @@ export default {
         margin-right: 8px;
         margin-left: 3px;
     }
-    
+
     &:last-child::after {
         display: none;
     }
-    
-    
+
+
 }
 
 #map-container {
@@ -160,5 +192,4 @@ export default {
     height: 400px;
 
 }
-
 </style>
