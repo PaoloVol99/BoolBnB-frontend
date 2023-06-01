@@ -98,54 +98,29 @@ export default {
             let marker = new tt.Marker().setLngLat(center)
             marker.addTo(map)
         }
-            
-    //     fetchMap() {
-    //     axios.get('https://api.tomtom.com/map/1/tile/basic/main/0/0/0.png',
-    //         {
-    //             params: {
-    //                 key: '5yE1GYuQA7WyAdPZ1zAeJtBq8cKtoae3',
-    //                 tileSize: 256,
-    //                 view: 'Unified',
-    //                 language: 'it-IT'
-    //         }})
-    //         .then((res) => {
-    //             console.log(res.data)
-    //             this.map = res.data
-    //         })
-    // }
-    // fetchApartment() {
-    //     axios.get('http://127.0.0.1:8000/api/apartments/attico-moderno-con-vista-mozzafiato')
-    //         .then((res) => {
-    //             this.apartment = res.data.results
-    //             console.log(this.apartment)
-    //             console.log(res)
-    //             this.apartmentAddress
-    //         })
-    // }
-
-            axios.get('https://api.tomtom.com/map/1/tile/basic/main/0/0/0.png',
-                {
-                    params: {
-                        key: '5yE1GYuQA7WyAdPZ1zAeJtBq8cKtoae3',
-                        tileSize: 256,
-                        view: 'Unified',
-                        language: 'it-IT'
-                    }
-                })
-                .then((res) => {
-                    console.log(res.data)
-                    this.map = res.data
-                })
-        }
-        // fetchApartment() {
-        //     axios.get('http://127.0.0.1:8000/api/apartments/attico-moderno-con-vista-mozzafiato')
+        //     axios.get('https://api.tomtom.com/map/1/tile/basic/main/0/0/0.png',
+        //         {
+        //             params: {
+        //                 key: '5yE1GYuQA7WyAdPZ1zAeJtBq8cKtoae3',
+        //                 tileSize: 256,
+        //                 view: 'Unified',
+        //                 language: 'it-IT'
+        //             }
+        //         })
         //         .then((res) => {
-        //             this.apartment = res.data.results
-        //             console.log(this.apartment)
-        //             console.log(res)
-        //             this.apartmentAddress
+        //             console.log(res.data)
+        //             this.map = res.data
         //         })
         // }
+        // // fetchApartment() {
+        // //     axios.get('http://127.0.0.1:8000/api/apartments/attico-moderno-con-vista-mozzafiato')
+        // //         .then((res) => {
+        // //             this.apartment = res.data.results
+        // //             console.log(this.apartment)
+        // //             console.log(res)
+        // //             this.apartmentAddress
+        // //         })
+        // // }
 
     },
     mounted() {
@@ -173,12 +148,10 @@ export default {
     }
 
 
- }
+}
 
- #map-container {
+#map-container {
     width: 400px;
     height: 400px;
- }
-
-
+}
 </style>
