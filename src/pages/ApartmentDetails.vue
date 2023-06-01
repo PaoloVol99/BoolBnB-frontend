@@ -1,13 +1,12 @@
 <template>
-
     <Default>
-       
+
         <div class="container">
             <h1>{{ apartment.title }}</h1>
             <span>{{ apartment.address + ', ' + apartment.city }}</span>
             <div class="row">
                 <div class="col-7">
-                    <img :src=" apartment.cover_image " alt="">
+                    <img :src="apartment.cover_image" alt="">
                 </div>
                 <div class="col-5">
                     ALTRE IMMAGINI
@@ -36,14 +35,18 @@
                         <span>{{ apartment.sqm }} &#13217;</span>
                     </div>
                 </div>
+
                 <div id="map-container" :ref="mapContainer">
+
+
+
                 </div>
             </div>
 
         </div>
+        <Message :apartment_id="apartment.id"></Message>
 
     </Default>
-
 </template>
 
 <script>
@@ -53,8 +56,9 @@ import Featured_accommodation from '../components/Featured_accommodation.vue';
 import axios from 'axios'
 import Default from '../layouts/Default.vue';
 import tt from '@tomtom-international/web-sdk-maps'
+import Message from '../components/Message.vue'
 
-    export default {
+export default {
     data() {
         return {
             apartment: {
@@ -73,7 +77,7 @@ import tt from '@tomtom-international/web-sdk-maps'
                 "price": "324.00",
                 "description": "Sint vel sed non pariatur cumque. Aut et eos aspernatur rerum quas. Velit consequatur placeat aut voluptas laboriosam iure voluptates. Qui iste iste dolor aut. Tempora sequi ducimus eum. Nesciunt nisi minima inventore aut quaerat.",
                 "cover_image": "https://via.placeholder.com/640x480.png/009955?text=est",
-                "slug":"villa-di-lusso-con-vista-mare-e-piscina-privata"
+                "slug": "villa-di-lusso-con-vista-mare-e-piscina-privata"
             },
             apiKey: '5yE1GYuQA7WyAdPZ1zAeJtBq8cKtoae3',
             mapContainer: this.$refs.mapContainer
@@ -82,6 +86,7 @@ import tt from '@tomtom-international/web-sdk-maps'
     },
     methods: {
         fetchMap() {
+
             let center = [9.093420, 45.274068]
             const map = tt.map({
                 key: '5yE1GYuQA7WyAdPZ1zAeJtBq8cKtoae3',
@@ -117,32 +122,56 @@ import tt from '@tomtom-international/web-sdk-maps'
     //             this.apartmentAddress
     //         })
     // }
+
+            axios.get('https://api.tomtom.com/map/1/tile/basic/main/0/0/0.png',
+                {
+                    params: {
+                        key: '5yE1GYuQA7WyAdPZ1zAeJtBq8cKtoae3',
+                        tileSize: 256,
+                        view: 'Unified',
+                        language: 'it-IT'
+                    }
+                })
+                .then((res) => {
+                    console.log(res.data)
+                    this.map = res.data
+                })
+        }
+        // fetchApartment() {
+        //     axios.get('http://127.0.0.1:8000/api/apartments/attico-moderno-con-vista-mozzafiato')
+        //         .then((res) => {
+        //             this.apartment = res.data.results
+        //             console.log(this.apartment)
+        //             console.log(res)
+        //             this.apartmentAddress
+        //         })
+        // }
+
     },
-    mounted () {
+    mounted() {
         this.fetchMap();
     },
-    components: { Default }
+    components: { Default, Message }
 }
 </script>
 
 <style lang="scss" scoped>
-
-
 // TEMPORANEO
- .spec {
-     &::after {
-     content: '';
-     display: inline-block;
-     width: 2px;
-     height: 13px;
-     background-color: black;
-     margin-right: 8px;
-     margin-left: 3px;
+.spec {
+    &::after {
+        content: '';
+        display: inline-block;
+        width: 2px;
+        height: 13px;
+        background-color: black;
+        margin-right: 8px;
+        margin-left: 3px;
     }
 
     &:last-child::after {
         display: none;
     }
+
 
  }
 
@@ -150,8 +179,6 @@ import tt from '@tomtom-international/web-sdk-maps'
     width: 400px;
     height: 400px;
  }
- 
- 
- 
+
 
 </style>

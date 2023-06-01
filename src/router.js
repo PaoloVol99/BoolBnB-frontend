@@ -20,7 +20,8 @@ const router = createRouter({
         {
             path: '/dettaglio-appartamento',
             name: 'dettaglio-appartamento',
-            component: ApartmentDetails
+            component: ApartmentDetails,
+            props: true
         }
     ]
 })
