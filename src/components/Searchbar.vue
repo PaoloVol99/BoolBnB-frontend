@@ -34,112 +34,6 @@ export default {
         }
     },
     methods: {
-
-        fetchApartmentsRadius() {
-
-            let data = JSON.stringify({
-                "geometryList": this.geometryFilter,
-                "poiList": this.poiListFormatted
-            });
-
-            let config = {
-                method: 'post',
-                maxBodyLength: Infinity,
-                url: 'https://api.tomtom.com/search/2/geometryFilter.json?key=5yE1GYuQA7WyAdPZ1zAeJtBq8cKtoae3',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                data: data
-            };
-
-            axios.request(config)
-                .then((response) => {
-                    console.log("risultato", response.data);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
-        }
-        // const json = {
-
-        //     poiList: [
-
-        //         {
-        //             poi: {
-        //                 name: "S Restaurant Tom's"
-        //             },
-
-        //             address: {
-        //                 freeFormAddress: "2880 Broadway, New York, NY 10025"
-        //             },
-
-        //             position: {
-        //                 lat: 40.80558,
-        //                 lon: -73.96548
-        //             }
-
-
-        //         },
-
-        //         {
-        //             poi: {
-        //                 name: "Yasha Raman Corporation"
-        //             },
-
-        //             address: {
-        //                 freeFormAddress: "940 Amsterdam Ave, New York, NY 10025"
-        //             },
-
-        //             position: {
-        //                 lat: 40.80076,
-        //                 lon: -73.96556
-        //             }
-
-
-        //         },
-        //     ],
-
-        //     geometryList: [
-        //         {
-        //             type: "CIRCLE",
-        //             position: "40.80558, -73.96548",
-        //             radius: 100
-        //         },
-        //         {
-        //             type: "POLIGON",
-        //             vertices: [
-        //                 "37.7524152343544, -122.43576049804686",
-        //                 "37.70660472542312, -122.43301391601562",
-        //                 "37.712059855877314, -122.36434936523438",
-        //                 "37.75350561243041, -122.37396240234374"
-        //             ]
-        //         }
-        //     ]
-
-        // }
-
-        // const jsonFormatted = JSON.stringify(json)
-
-        // axios.get("https://api.tomtom.com/search/2/geometryFilter.json?key=5yE1GYuQA7WyAdPZ1zAeJtBq8cKtoae3", jsonFormatted,
-        //     {
-        //         // params:{
-        //         //     key: '5yE1GYuQA7WyAdPZ1zAeJtBq8cKtoae3',
-        //         //     geometryList: JSON.stringify(this.geometryFilter),
-        //         //     poiList: JSON.stringify(this.poiList)
-
-        //         // }
-
-        //         headers: {
-        //             'accept': '*/*',
-        //             'Content-Type': 'application/json'
-        //         }
-        //     })
-        //     .then((res) => {
-        //         console.log("risultato", res.data)
-        //         console.log("json", json)
-        //     })
-        // console.log("funzione ok", JSON.stringify(this.geometryFilter))
-        ,
         fetchResults() {
             if (this.searchBox != '') {
                 axios.get(`https://api.tomtom.com/search/2/search/${this.searchBox}.json`,
@@ -215,11 +109,15 @@ export default {
                 })
 
         },
+        pippo() {
+            console.log('funziona')
+        },
         fetchApartmentsRadiusCustom() {
             // console.log('geometryfilter', this.geometryFilter[0].latitudine);
             const latCenter = this.geometryFilter[0].latitudine;
             const lonCenter = this.geometryFilter[0].longitudine;
-            const radius = 20 * 1000;
+            const radius = this.store.radius;
+
 
             const filteredApartments = [];
             this.store.apartments.filter((apartment) => {

@@ -12,11 +12,20 @@
                     <Searchbar class="searchbar"></Searchbar>
 
                     <label for="beds">Numero di letti</label>
-                    <input v-model="bedsFilter" class="input_number display-tablet-desktop" type="number" id="beds" name="beds">
+                    <input v-model="bedsFilter" class="input_number display-tablet-desktop" type="number" id="beds"
+                        name="beds">
 
-                    <a class="btn ms-button ms-3" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                    <a class="btn ms-button ms-3" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
+                        aria-controls="offcanvasExample">
                         Altri filtri
                     </a>
+
+                </div>
+                <div class="filter-section">
+                    <h5>Km</h5>
+                    <input v-model="rangeFilter" class="price-filter" type="range" id="price-filter" name="price-filter"
+                        min="20" max="150" step="1" @change="rangeMap">
+                    <span id="price-label" class="price-label">{{ rangeFilter }}km</span>
                 </div>
             </div>
 
@@ -57,6 +66,8 @@
                             <span id="price-label" class="price-label">{{ priceFilter }}&euro;</span>
                         </div>
 
+
+
                         <!-- Lista servizi -->
                         <div class="filter-section py-3">
                             <h5>Servizi</h5>
@@ -64,7 +75,8 @@
                             <template v-for="(service, index) in services" :key="service.id">
                                 <template v-if="index < 5">
                                     <div class="form-check">
-                                        <input type="checkbox" name="serviceFilter[]" class="form-check-input" :value="service.id" :id="service.id" v-model="serviceFilter">
+                                        <input type="checkbox" name="serviceFilter[]" class="form-check-input"
+                                            :value="service.id" :id="service.id" v-model="serviceFilter">
                                         <label for="service" class="form-check-label">{{ service.name }}</label>
                                     </div>
                                 </template>
@@ -73,13 +85,15 @@
                             <template v-for="(service, index) in services" :key="service.id">
                                 <template v-if="index >= 5">
                                     <div :class="[displayService, 'form-check']">
-                                        <input type="checkbox" name="serviceFilter[]" class="form-check-input" :value="service.id" :id="service.id" v-model="serviceFilter">
+                                        <input type="checkbox" name="serviceFilter[]" class="form-check-input"
+                                            :value="service.id" :id="service.id" v-model="serviceFilter">
                                         <label for="service" class="form-check-label">{{ service.name }}</label>
                                     </div>
                                 </template>
                             </template>
                             <!-- Bottone per mostrare altri servizi -->
-                            <button class="btn ms-button ms-other-services" @click="fetchOtherServices()">{{ displayService == "d-none" ? "mostra altri" : "nascondi" }}</button>
+                            <button class="btn ms-button ms-other-services" @click="fetchOtherServices()">{{ displayService
+                                == "d-none" ? "mostra altri" : "nascondi" }}</button>
                         </div>
 
                         <!-- Bottone per applicare i filtri -->
@@ -96,7 +110,8 @@
             <!-- Lista appartamenti -->
             <div class="container py-3">
                 <div class="row justify-content-center">
-                    <div v-for="apartment in this.advanceApartments" :key="apartment.id" class="col-sm-6 col-md-4 col-lg-3 ms-col">
+                    <div v-for="apartment in this.advanceApartments" :key="apartment.id"
+                        class="col-sm-6 col-md-4 col-lg-3 ms-col">
                         <router-link :to="{ name: 'dettaglio-appartamento' }" class="card">
                             <img class="card-img" :src="apartment.cover_path" alt="immagine">
                             <div class="card-description">
@@ -148,6 +163,7 @@ export default {
             bedsFilter: 0,
             roomsFilter: 0,
             bathroomsFilter: 0,
+            rangeFilter: 20000
         }
     },
     components: {
@@ -158,6 +174,12 @@ export default {
 
     },
     methods: {
+        rangeMap() {
+            this.store.radius = this.rangeFilter
+            Searchbar.methods.pippo()
+            // Searchbar.methods.fetchApartmentsRadiusCustom()
+            console.log('funziono', this.store.radius)
+        },
         fetchOtherServices() {
             if (this.displayService == "d-none") {
                 this.displayService = "d-block"
@@ -176,7 +198,7 @@ export default {
             // se non abbiamo selezionato nessun servizio, stampiamo tutti gli appartamenti che riceviamo dalla ricerca
             if (this.serviceFilter.length == 0) {
                 this.advanceApartments = this.store.filteredApartments
-            } 
+            }
 
             // filtrare gli appartamenti in base ai filtri
             this.advanceApartments = this.store.filteredApartments.filter((apartment) => {
@@ -189,18 +211,18 @@ export default {
 
                 // se abbiamo selezionato dei servizi controlliamo che siano presenti dentro l'appartamento
                 if (this.serviceFilter.length !== 0) {
-                    
+
                     servicesCondition = this.serviceFilter.every(value => servicesApartment.some(oggetto => oggetto.id === value));
 
                     console.log("Appartamenti filtrati per servizi:", servicesCondition);
-  
+
                 }
 
                 // controlliamo i vari filtri
                 if (bedsCondition && roomsCondition && bathroomsCondition && priceCondition && servicesCondition) {
                     console.log("entrato")
                     return true
-                }else{
+                } else {
                     return false
                 }
 
@@ -210,7 +232,7 @@ export default {
     },
     created() {
         this.fetchServices(),
-        this.filterApartments()
+            this.filterApartments()
     }
 }
 </script>

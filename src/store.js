@@ -1,9 +1,10 @@
-import {reactive} from 'vue';
+import { reactive } from 'vue';
 
 const store = reactive({
     city: "",
     apartments: [],
-    filteredApartments : []
+    filteredApartments: [],
+    radius: 20000,
 })
 
 export default store
