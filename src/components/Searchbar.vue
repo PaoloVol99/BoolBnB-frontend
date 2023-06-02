@@ -68,6 +68,9 @@ export default {
 
             this.geometryFilter.push(createFilter)
 
+            this.store.lat = this.results[i].position.lat
+            this.store.lon = this.results[i].position.lon
+
             // console.log("create filter geometry", createFilter)
             this.results = []
 
@@ -109,13 +112,12 @@ export default {
                 })
 
         },
-        pippo() {
-            console.log('funziona')
-        },
         fetchApartmentsRadiusCustom() {
             // console.log('geometryfilter', this.geometryFilter[0].latitudine);
-            const latCenter = this.geometryFilter[0].latitudine;
-            const lonCenter = this.geometryFilter[0].longitudine;
+            // const latCenter = this.geometryFilter[0].latitudine;
+            // const lonCenter = this.geometryFilter[0].longitudine;
+            const latCenter = this.store.lat;
+            const lonCenter = this.store.lon;
             const radius = this.store.radius;
 
 

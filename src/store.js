@@ -5,6 +5,8 @@ const store = reactive({
     apartments: [],
     filteredApartments: [],
     radius: 20000,
+    lat: "",
+    lon: ""
 })
 
 export default store
