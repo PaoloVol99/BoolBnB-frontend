@@ -186,7 +186,7 @@ export default {
     },
     methods: {
         rangeMap() {
-            this.store.radius = this.rangeFilter
+            this.store.radius = this.rangeFilter * 1000
             Searchbar.methods.fetchApartments()
             console.log('funziono', this.store.radius)
         },
