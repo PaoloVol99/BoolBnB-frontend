@@ -176,8 +176,7 @@ export default {
     methods: {
         rangeMap() {
             this.store.radius = this.rangeFilter
-            Searchbar.methods.pippo()
-            // Searchbar.methods.fetchApartmentsRadiusCustom()
+            Searchbar.methods.fetchApartments()
             console.log('funziono', this.store.radius)
         },
         fetchOtherServices() {
