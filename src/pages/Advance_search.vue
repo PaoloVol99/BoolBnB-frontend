@@ -110,12 +110,15 @@
                                 </template>
                             </template>
                             <!-- Bottone per mostrare altri servizi -->
-                            <button class="btn ms-button ms-other-services" @click="fetchOtherServices()">{{ displayService
+                            <button class="btn ms-button ms-button-secondary ms-other-services" @click="fetchOtherServices()">{{ displayService
                                 == "d-none" ? "mostra altri" : "nascondi" }}</button>
                         </div>
 
                         <!-- Bottone per applicare i filtri -->
-                        <button class="apply-filters ms-button" @click="filterApartments">Applica filtri</button>
+                        <div class="d-flex flex-column gap-2">
+                            <button class="apply-filters ms-button" @click="filterApartments">Applica filtri</button>
+                            <button class="apply-filters ms-button ms-button-secondary" @click="resetFilters">Reset filtri</button>
+                        </div>
 
                     </div>
 
@@ -362,11 +365,7 @@ export default {
         fetchApartmentResults(){
             // se non abbiamo selezionato nessun servizio, stampiamo tutti gli appartamenti che riceviamo dalla ricerca
             if (this.serviceFilter.length == 0) {
-            console.log("dentro la funzione")
-            console.log("advanceApartments", this.advanceApartments)
-            console.log("store.filteredApartments", this.store.filteredApartments)
             this.advanceApartments = this.store.filteredApartments
-
             }
         },
         filterApartments() {
@@ -399,7 +398,21 @@ export default {
 
             })
 
-        }
+        },
+        resetFilters(){
+            // ristampiamo tutti gli appartamenti in base alla città
+            this.advanceApartments = this.store.filteredApartments
+
+            // resettiamo i campi di input
+            this.bedsFilter = ""
+            this.roomsFilter = ""
+            this.bathroomsFilter = ""
+            this.priceFilter = 20
+            this.rangeFilter = 20
+            this.serviceFilter = []
+            // richiamiamo la funzione per ricercare le case in base al range resettato
+            this.rangeMap()
+        },
     },
     created() {
         this.fetchServices(),
@@ -495,11 +508,12 @@ export default {
     border: none;
     border-radius: 999px;
 }
-
-.ms-other-services {
+.ms-button-secondary{
     color: $primary-color;
     background-color: white;
     border: 1px solid $primary-color;
+}
+.ms-other-services {
     border-radius: 10px;
     padding: 5px 10px;
     margin-top: 10px;
