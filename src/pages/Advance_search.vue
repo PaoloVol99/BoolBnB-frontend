@@ -170,8 +170,19 @@ export default {
         Default,
         Searchbar,
     },
-    computed: {
-
+    computed:{
+        getApartmentsStore(){
+            return this.store.filterApartments
+        }
+    },
+    watch: {
+        'store.filteredApartments': {
+            handler: 'fetchApartmentResults',
+            immediate: true
+        }
+        // getApartmentsStore(newVal, oldVal){
+        //     this.fetchApartmentResults()
+        // }
     },
     methods: {
         rangeMap() {
@@ -188,16 +199,29 @@ export default {
         },
         fetchServices() {
             axios.get("http://127.0.0.1:8000/api/services")
-                .then((res) => {
-                    this.services = res.data.results
-                })
+            .then((res) => {
+                this.services = res.data.results
+            })
+        },
+        fetchApartmentResults(){
+                // se non abbiamo selezionato nessun servizio, stampiamo tutti gli appartamenti che riceviamo dalla ricerca
+                if (this.serviceFilter.length == 0) {
+                console.log("dentro la funzione")
+                console.log("advanceApartments", this.advanceApartments)
+                console.log("store.filteredApartments", this.store.filteredApartments)
+                this.advanceApartments = this.store.filteredApartments
+
+            }
         },
         filterApartments() {
 
             // se non abbiamo selezionato nessun servizio, stampiamo tutti gli appartamenti che riceviamo dalla ricerca
-            if (this.serviceFilter.length == 0) {
-                this.advanceApartments = this.store.filteredApartments
-            }
+            // if (this.serviceFilter.length == 0) {
+            //     console.log("dentro la funzione")
+            //     console.log("advanceApartments", this.advanceApartments)
+            //     console.log("store.filteredApartments", this.store.filteredApartments)
+            //     this.advanceApartments = this.store.filteredApartments
+            // }
 
             // filtrare gli appartamenti in base ai filtri
             this.advanceApartments = this.store.filteredApartments.filter((apartment) => {
@@ -231,7 +255,7 @@ export default {
     },
     created() {
         this.fetchServices(),
-            this.filterApartments()
+        this.fetchApartmentResults()
     }
 }
 </script>
