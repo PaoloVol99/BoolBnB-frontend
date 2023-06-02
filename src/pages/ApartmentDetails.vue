@@ -68,7 +68,8 @@ import Suggested_holidays from '../components/Suggested_holidays.vue';
 import Featured_accommodation from '../components/Featured_accommodation.vue';
 import axios from 'axios'
 import Default from '../layouts/Default.vue';
-import tt from '@tomtom-international/web-sdk-maps'
+import tt from '@tomtom-international/web-sdk-maps';
+import store from '../store';
 
 
 export default {
@@ -92,8 +93,9 @@ export default {
                 "cover_image": "https://via.placeholder.com/640x480.png/009955?text=est",
                 "slug": "villa-di-lusso-con-vista-mare-e-piscina-privata"
             },
-            name: '',
-            email: '',
+            store,
+            name: store.userName,
+            email: store.userEmail,
             text: '',
             success: false,
             errors: null,
