@@ -1,6 +1,8 @@
 import { reactive } from 'vue';
 
 const store = reactive({
+    userName: "",
+    userEmail: "",
     city: "",
     apartments: [],
     filteredApartments: [],
