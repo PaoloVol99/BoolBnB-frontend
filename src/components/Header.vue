@@ -24,10 +24,12 @@
                             avanzata</router-link>
                     </li>
 
-                    <li class="nav-item mx-2">
-                        <a class="nav-link submit-bottom active rounded-3" aria-current="page"
-                            href="http://127.0.0.1:8000/login">Iscriviti</a>
+                    <li v-if="this.store.userName">
+                        <a class="ms_a" href="http://127.0.0.1:8000/login">{{ this.store.userName }}</a></li>
+                    <li v-else class="nav-item mx-2">
+                        <a class="nav-link submit-bottom active rounded-3" aria-current="page" href="http://127.0.0.1:8000/login">Iscriviti</a>
                     </li>
+
 
                 </ul>
             </div>
@@ -36,8 +38,14 @@
 </template>
 
 <script>
-export default {
+import store from '../store';
 
+export default {
+    data() {
+        return {
+        store 
+        }
+    }
 }
 </script>
 
