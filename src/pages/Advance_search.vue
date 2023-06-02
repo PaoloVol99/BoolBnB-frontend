@@ -6,11 +6,11 @@
             <div class="container">
                 <h1 class="py-3">Ricerca Avanzata</h1>
             </div>
-            <!-- Searchbar -->
+            <!-- Searchbar e filtri -->
             <div class="container">
                 <div class="ms-filters">
-                    <!-- <Searchbar class="searchbar"></Searchbar> -->
 
+                    <!-- searchbar -->
                     <div>
                         <div class="container">
                             <div class="ms_form-container position-relative">
@@ -28,16 +28,17 @@
                         </div>
                     </div>
 
+                    <!-- filtri -->
                     <label for="beds">Numero di letti</label>
-                    <input v-model="bedsFilter" class="input_number display-tablet-desktop" type="number" id="beds"
-                        name="beds">
+                    <input v-model="bedsFilter" @change="filterApartments" class="input_number display-tablet-desktop" type="number" id="beds" name="beds">
 
-                    <a class="btn ms-button ms-3" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
-                        aria-controls="offcanvasExample">
+                    <a class="btn ms-button ms-3" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
                         Altri filtri
                     </a>
 
                 </div>
+
+                <!-- range km -->
                 <div class="filter-section">
                     <h5>Km</h5>
                     <input v-model="rangeFilter" class="price-filter" type="range" id="price-filter" name="price-filter"
