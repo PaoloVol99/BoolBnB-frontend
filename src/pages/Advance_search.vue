@@ -450,9 +450,14 @@ export default {
 <style lang="scss" scoped>
 @use '../style/partials/variables.scss' as *;
 
-.searchbar-section{
-    padding: 40px 0 80px 0;
-}
+// .searchbar-section{
+//     padding: 40px 0 80px 0;
+//     background-image: url('firenze.png');
+//     background-position: center;
+//     background-repeat: no-repeat;
+//     background-size: cover;
+//     filter: brightness(0.7);
+// }
 
 .ms-filters {
     display: flex;
@@ -495,6 +500,7 @@ export default {
 }
 
 .searchbar-el{
+    text-align: center;
     margin-bottom: 15px;
 }
 
@@ -506,6 +512,7 @@ export default {
 
 @media screen and (min-width: 768px) {
     .searchbar-el{
+    text-align: start;
         margin-bottom: 0;
     }
     .offcanvas {
