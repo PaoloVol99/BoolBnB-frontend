@@ -11,7 +11,7 @@
                 <div class="ms-filters">
 
                     <!-- searchbar -->
-                    <div class="col">
+                    <div class="col-12 col-5-lg">
                         <div class="container">
                             <div class="d-flex flex-column gap-2">
                                 <h5>Inserisci località</h5>
@@ -22,36 +22,40 @@
                                             {{ result.address.freeformAddress }}
                                         </div>
                                     </div>
-                                    <router-link :to="{ name: 'ricerca-avanzata' }">
-                                        <button class="btn ms-button rounded-pill" @click="fetchApartments()">Cerca</button>
-                                    </router-link>
                                 </div>
                             </div>
                         </div>
                     </div>
 
-                    <!-- range km -->
+                    <!-- range km
                     <div class="col-2">              
                         <div class="d-flex flex-column gap-2">
                             <h5>Km</h5>
                             <div class="d-flex align-items-center">
-                                <input v-model="rangeFilter" class="price-filter" type="range" id="price-filter" name="price-filter"
-                                    min="1" max="150" step="1" @change="rangeMap">
+                                <input v-model="rangeFilter" class="price-filter" type="range" id="price-filter" name="price-filter" min="1" max="150" step="1" @change="rangeMap">
                                 <span id="price-label" class="price-label">{{ rangeFilter }} km</span>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
 
                     <!-- filtri -->
-                    <div class="col-1">
+                    <div class="col-auto col-1-lg">
                         <div class="d-flex flex-column gap-2">
                             <h5>N. letti</h5>
-                            <input v-model="bedsFilter" @change="filterApartments" class="bedsFilterSearch input_number display-tablet-desktop" type="number" id="beds" name="beds">
+                            <input v-model="bedsFilter" @change="filterApartments" class="bedsFilterSearch input_number display-tablet-desktop" type="number" id="beds" name="beds" placeholder="1">
                         </div>
                     </div>
+
+                    <!-- bottone cerca -->
+                    <div class="col-auto col-1-lg">
+                        <router-link :to="{ name: 'ricerca-avanzata' }">
+                            <button class="btn ms-button rounded-pill" @click="fetchApartments()">Cerca</button>
+                        </router-link>
+                    </div>
+
                     <!-- bottone altri filtri -->
                     <div class="col-1">
-                        <a class="d-block btn ms-button ms-button-otherFilters" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                        <a class="d-block btn ms-button-secondary ms-button ms-button-otherFilters" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
                             Altri filtri
                         </a>
                     </div>
@@ -90,11 +94,19 @@
                                 id="bathrooms" name="bathrooms" placeholder="1">
                         </div>
 
-                        <div class="filter-section">
+                        <div class="filter-section price-filter-box">
                             <h5>Prezzo minimo a notte</h5>
                             <div class="d-flex align-items-center">
                                 <input v-model="priceFilter" class="price-filter" type="range" id="price-filter" name="price-filter" min="20" max="500" step="1">
                                 <span id="price-label" class="price-label">{{ priceFilter }}&euro;</span>
+                            </div>
+                        </div>
+
+                        <div class="filter-section">
+                            <h5>Distanza dal centro</h5>
+                            <div class="d-flex align-items-center">
+                                <input v-model="rangeFilter" class="price-filter" type="range" id="price-filter" name="price-filter" min="1" max="150" step="1" @change="rangeMap">
+                                <span id="price-label" class="price-label">{{ rangeFilter }} km</span>
                             </div>
                         </div>
 
@@ -468,8 +480,8 @@ export default {
     }
 }
 
-.price-filter::-webkit-slider-thumb {
-    background-color: red;
+.price-filter-box{
+    margin-bottom: 20px;
 }
 
 .offcanvas {
@@ -641,8 +653,7 @@ export default {
 }
 
 .ms_input {
-    width: 90%;
-    margin-right: 20px;
+    width: 100%;
     display: block;
     background-color: rgb(234, 234, 234);
     border: none;
