@@ -6,44 +6,62 @@
             <div class="container">
                 <h1 class="py-3">Ricerca Avanzata</h1>
             </div>
-            <!-- Searchbar -->
-            <div class="container">
+            <!-- Searchbar e filtri -->
+            <div class="container searchbar-section">
                 <div class="ms-filters">
-                    <!-- <Searchbar class="searchbar"></Searchbar> -->
 
-                    <div>
+                    <!-- searchbar -->
+                    <div class="col-12 col-5-lg">
                         <div class="container">
-                            <div class="ms_form-container position-relative">
-                                <input class="ms_input" v-model="searchBox" @keyup="fetchResults()" type="text">
-                                <div class="ms_autocomplete-container position-absolute z-index-2">
-                                    <div class="autocomplete z-index-2" v-for="(result, i) in results" @click="selectResult(i)">
-                                        {{ result.address.freeformAddress }}
+                            <div class="d-flex flex-column gap-2">
+                                <h5>Inserisci località</h5>
+                                <div class="ms_form-container position-relative">
+                                    <input class="ms_input" v-model="searchBox" @keyup="fetchResults()" type="text">
+                                    <div class="ms_autocomplete-container position-absolute z-index-2">
+                                        <div class="autocomplete z-index-2" v-for="(result, i) in results" @click="selectResult(i)">
+                                            {{ result.address.freeformAddress }}
+                                        </div>
                                     </div>
                                 </div>
-                                <!-- <button class="btn btn-primary rounded-pill" @click="fetchApartments()">Cerca</button> -->
-                                <router-link :to="{ name: 'ricerca-avanzata' }">
-                                    <button class="btn btn-primary rounded-pill" @click="fetchApartments()">Cerca</button>
-                                </router-link>
                             </div>
                         </div>
                     </div>
 
-                    <label for="beds">Numero di letti</label>
-                    <input v-model="bedsFilter" class="input_number display-tablet-desktop" type="number" id="beds"
-                        name="beds">
+                    <!-- range km
+                    <div class="col-2">              
+                        <div class="d-flex flex-column gap-2">
+                            <h5>Km</h5>
+                            <div class="d-flex align-items-center">
+                                <input v-model="rangeFilter" class="price-filter" type="range" id="price-filter" name="price-filter" min="1" max="150" step="1" @change="rangeMap">
+                                <span id="price-label" class="price-label">{{ rangeFilter }} km</span>
+                            </div>
+                        </div>
+                    </div> -->
 
-                    <a class="btn ms-button ms-3" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button"
-                        aria-controls="offcanvasExample">
-                        Altri filtri
-                    </a>
+                    <!-- filtri -->
+                    <div class="col-auto col-1-lg">
+                        <div class="d-flex flex-column gap-2">
+                            <h5>N. letti</h5>
+                            <input v-model="bedsFilter" @change="filterApartments" class="bedsFilterSearch input_number display-tablet-desktop" type="number" id="beds" name="beds" placeholder="1">
+                        </div>
+                    </div>
+
+                    <!-- bottone cerca -->
+                    <div class="col-auto col-1-lg">
+                        <router-link :to="{ name: 'ricerca-avanzata' }">
+                            <button class="btn ms-button rounded-pill" @click="fetchApartments()">Cerca</button>
+                        </router-link>
+                    </div>
+
+                    <!-- bottone altri filtri -->
+                    <div class="col-1">
+                        <a class="d-block btn ms-button-secondary ms-button ms-button-otherFilters" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                            Altri filtri
+                        </a>
+                    </div>
 
                 </div>
-                <div class="filter-section">
-                    <h5>Km</h5>
-                    <input v-model="rangeFilter" class="price-filter" type="range" id="price-filter" name="price-filter"
-                        min="1" max="150" step="1" @change="rangeMap">
-                    <span id="price-label" class="price-label">{{ rangeFilter }}km</span>
-                </div>
+
             </div>
 
             <!-- Offcanvas per i filtri avanzati -->
@@ -76,11 +94,20 @@
                                 id="bathrooms" name="bathrooms" placeholder="1">
                         </div>
 
-                        <div class="filter-section">
+                        <div class="filter-section price-filter-box">
                             <h5>Prezzo minimo a notte</h5>
-                            <input v-model="priceFilter" class="price-filter" type="range" id="price-filter"
-                                name="price-filter" min="20" max="500" step="1">
-                            <span id="price-label" class="price-label">{{ priceFilter }}&euro;</span>
+                            <div class="d-flex align-items-center">
+                                <input v-model="priceFilter" class="price-filter" type="range" id="price-filter" name="price-filter" min="20" max="500" step="1">
+                                <span id="price-label" class="price-label">{{ priceFilter }}&euro;</span>
+                            </div>
+                        </div>
+
+                        <div class="filter-section">
+                            <h5>Distanza dal centro</h5>
+                            <div class="d-flex align-items-center">
+                                <input v-model="rangeFilter" class="price-filter" type="range" id="price-filter" name="price-filter" min="1" max="150" step="1" @change="rangeMap">
+                                <span id="price-label" class="price-label">{{ rangeFilter }} km</span>
+                            </div>
                         </div>
 
 
@@ -109,12 +136,15 @@
                                 </template>
                             </template>
                             <!-- Bottone per mostrare altri servizi -->
-                            <button class="btn ms-button ms-other-services" @click="fetchOtherServices()">{{ displayService
+                            <button class="btn ms-button ms-button-secondary ms-other-services" @click="fetchOtherServices()">{{ displayService
                                 == "d-none" ? "mostra altri" : "nascondi" }}</button>
                         </div>
 
                         <!-- Bottone per applicare i filtri -->
-                        <button class="apply-filters ms-button" @click="filterApartments">Applica filtri</button>
+                        <div class="d-flex flex-column gap-2">
+                            <button class="apply-filters ms-button" @click="filterApartments">Applica filtri</button>
+                            <button class="apply-filters ms-button ms-button-secondary" @click="resetFilters">Reset filtri</button>
+                        </div>
 
                     </div>
 
@@ -361,11 +391,7 @@ export default {
         fetchApartmentResults(){
             // se non abbiamo selezionato nessun servizio, stampiamo tutti gli appartamenti che riceviamo dalla ricerca
             if (this.serviceFilter.length == 0) {
-            console.log("dentro la funzione")
-            console.log("advanceApartments", this.advanceApartments)
-            console.log("store.filteredApartments", this.store.filteredApartments)
             this.advanceApartments = this.store.filteredApartments
-
             }
         },
         filterApartments() {
@@ -398,7 +424,21 @@ export default {
 
             })
 
-        }
+        },
+        resetFilters(){
+            // ristampiamo tutti gli appartamenti in base alla città
+            this.advanceApartments = this.store.filteredApartments
+
+            // resettiamo i campi di input
+            this.bedsFilter = ""
+            this.roomsFilter = ""
+            this.bathroomsFilter = ""
+            this.priceFilter = 20
+            this.rangeFilter = 20
+            this.serviceFilter = []
+            // richiamiamo la funzione per ricercare le case in base al range resettato
+            this.rangeMap()
+        },
     },
     created() {
         this.fetchServices(),
@@ -410,9 +450,13 @@ export default {
 <style lang="scss" scoped>
 @use '../style/partials/variables.scss' as *;
 
+.searchbar-section{
+    padding: 40px 0 80px 0;
+}
+
 .ms-filters {
     display: flex;
-    align-items: center;
+    align-items: end;
     justify-content: center;
 }
 
@@ -436,8 +480,8 @@ export default {
     }
 }
 
-.price-filter::-webkit-slider-thumb {
-    background-color: red;
+.price-filter-box{
+    margin-bottom: 20px;
 }
 
 .offcanvas {
@@ -494,14 +538,30 @@ export default {
     border: none;
     border-radius: 999px;
 }
-
-.ms-other-services {
+.ms-button:hover{
+    background-color: #60d2df;
+}
+.ms-button-secondary{
     color: $primary-color;
     background-color: white;
     border: 1px solid $primary-color;
+}
+.ms-button-secondary:hover{
+    color: white;
+    background-color: $primary-color;
+}
+
+.ms-other-services {
     border-radius: 10px;
     padding: 5px 10px;
     margin-top: 10px;
+}
+.ms-button-otherFilters{
+    padding: 10px 5px;
+}
+
+.bedsFilterSearch{
+    width: 80%;
 }
 
 .card {
@@ -578,11 +638,10 @@ export default {
     }
 }
 
-// seARCHBar
+// Searchbar
 .ms_form-container {
     display: flex;
     align-items: center;
-    margin: 0 auto;
 }
 
 .ms_autocomplete-container {
@@ -594,8 +653,7 @@ export default {
 }
 
 .ms_input {
-    width: 90%;
-    margin: 20px;
+    width: 100%;
     display: block;
     background-color: rgb(234, 234, 234);
     border: none;
@@ -609,22 +667,10 @@ export default {
 }
 
 .autocomplete {
-    // width: 90%;
-    // margin: 0 auto;
     display: block;
-    // border-radius: 10px;
-    // border-top: 1px solid rgb(205, 205, 205);
     cursor: pointer;
     padding: 8px 25px;
     background-color: white;
-    // &::after {
-    //     content: '';
-    //     display: block;
-    //     background-color: rgb(205, 205, 205);
-    //     width: 70%;
-    //     height: 1px;
-    //     margin: 8px auto 0;
-    // }
 
     &:first-of-type {
         border-top: none;
@@ -639,7 +685,6 @@ export default {
 }
 
 .autocomplete:hover {
-    // border-radius: 10px;
     background-color: rgb(235, 235, 235);
     padding-bottom: 8px;
     border: none;
@@ -647,9 +692,5 @@ export default {
     &+.autocomplete {
         border: none;
     }
-
-    // &::after {
-    //     display: none;
-    // }
 }
 </style>
