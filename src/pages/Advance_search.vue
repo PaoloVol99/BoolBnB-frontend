@@ -11,7 +11,7 @@
                 <div class="ms-filters">
 
                     <!-- searchbar -->
-                    <div class="col-12 col-5-lg">
+                    <div class="col-12 col-md-5 searchbar-el">
                         <div class="container">
                             <div class="d-flex flex-column gap-2">
                                 <h5>Inserisci località</h5>
@@ -38,24 +38,24 @@
                         </div>
                     </div> -->
 
-                    <!-- filtri -->
-                    <div class="col-auto col-1-lg">
+                    <!-- filtro letti -->
+                    <div class="col-auto col-md-2">
                         <div class="d-flex flex-column gap-2">
-                            <h5>N. letti</h5>
+                            <h5 class="display-tablet-desktop">N. letti</h5>
                             <input v-model="bedsFilter" @change="filterApartments" class="bedsFilterSearch input_number display-tablet-desktop" type="number" id="beds" name="beds" placeholder="1">
                         </div>
                     </div>
 
                     <!-- bottone cerca -->
-                    <div class="col-auto col-1-lg">
+                    <div class="col-auto">
                         <router-link :to="{ name: 'ricerca-avanzata' }">
                             <button class="btn ms-button rounded-pill" @click="fetchApartments()">Cerca</button>
                         </router-link>
                     </div>
 
                     <!-- bottone altri filtri -->
-                    <div class="col-1">
-                        <a class="d-block btn ms-button-secondary ms-button ms-button-otherFilters" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                    <div class="col-auto">
+                        <a class="d-block btn ms-button-secondary ms-button" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
                             Altri filtri
                         </a>
                     </div>
@@ -450,14 +450,21 @@ export default {
 <style lang="scss" scoped>
 @use '../style/partials/variables.scss' as *;
 
-.searchbar-section{
-    padding: 40px 0 80px 0;
-}
+// .searchbar-section{
+//     padding: 40px 0 80px 0;
+//     background-image: url('firenze.png');
+//     background-position: center;
+//     background-repeat: no-repeat;
+//     background-size: cover;
+//     filter: brightness(0.7);
+// }
 
 .ms-filters {
     display: flex;
     align-items: end;
     justify-content: center;
+    flex-wrap: wrap;
+    gap: 10px;
 }
 
 .price-label {
@@ -492,6 +499,11 @@ export default {
     display: none;
 }
 
+.searchbar-el{
+    text-align: center;
+    margin-bottom: 15px;
+}
+
 @media screen and (min-width: 576px) {
     .offcanvas {
         width: 50%;
@@ -499,6 +511,10 @@ export default {
 }
 
 @media screen and (min-width: 768px) {
+    .searchbar-el{
+    text-align: start;
+        margin-bottom: 0;
+    }
     .offcanvas {
         width: 40%;
     }
@@ -556,12 +572,9 @@ export default {
     padding: 5px 10px;
     margin-top: 10px;
 }
-.ms-button-otherFilters{
-    padding: 10px 5px;
-}
 
 .bedsFilterSearch{
-    width: 80%;
+    width: 100%;
 }
 
 .card {
