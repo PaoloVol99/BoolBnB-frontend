@@ -4,12 +4,14 @@
         <div class="container">
             <h1>{{ apartment.title }}</h1>
             <span>{{ apartment.address + ', ' + apartment.city }}</span>
-            <div class="row">
-                <div class="col-7">
-                    <img :src="apartment.cover_image" alt="">
+            <div class="row ms_row">
+                <div class="col-xl-7 col-sm-12 ms_col-5 p-1 g-0">
+                    <img class="ms_img" :src="apartment.cover_image" alt="">
                 </div>
-                <div class="col-5">
-                    ALTRE IMMAGINI
+                <div class="col-xl-5 col-sm-12 ms_col-7 d-flex flex-wrap g-0">
+                    <div class="extra-image-container p-1" v-for="image in apartment.images" :class="extraImagesLayout()">
+                        <img class="ms_img extra-image" :src="image" alt="">
+                    </div>
                 </div>
             </div>
             <div class="specifications d-flex">
@@ -90,8 +92,16 @@ export default {
                 "visibility": 1,
                 "price": "324.00",
                 "description": "Sint vel sed non pariatur cumque. Aut et eos aspernatur rerum quas. Velit consequatur placeat aut voluptas laboriosam iure voluptates. Qui iste iste dolor aut. Tempora sequi ducimus eum. Nesciunt nisi minima inventore aut quaerat.",
-                "cover_image": "https://via.placeholder.com/640x480.png/009955?text=est",
-                "slug": "villa-di-lusso-con-vista-mare-e-piscina-privata"
+                "cover_image": "https://www.relocatemagazine.com/media/images/scarpa-16_14791_compressed_31FCD1C449F3178CE482BACDE88E7BA5.jpg",
+                "slug": "villa-di-lusso-con-vista-mare-e-piscina-privata",
+                "images": [
+                    "https://www.home-designing.com/wp-content/uploads/2017/10/white-sectional-sofa.jpg",
+                    "https://cf.bstatic.com/xdata/images/hotel/max1024x768/327944475.jpg?k=3e320affa2acb80527145ad11f51e9f25f28b8d6abfb032bdfa5e7bcee4bb8b9&o=&hp=1",
+                    "https://www.bridgeland.com/wp-content/uploads/2022/11/BL_MF_StarlingBridgeland-67.jpg",
+                    "https://static.theceomagazine.net/wp-content/uploads/2020/09/04114637/luxury-apartments.jpg",
+                    "https://www.engelvoelkers.com/images/306f49cc-17b5-46a5-ac78-b9088bfad171/modern-luxury-apartments-with-mediterranean-flair-in-the-heart-of-the-southwest-",
+
+                ]
             },
             store,
             name: store.userName,
@@ -135,6 +145,26 @@ export default {
             })
             // let marker = new tt.Marker().setLngLat(center)
             // marker.addTo(map)
+        },
+        extraImagesLayout() {
+            switch (this.apartment.images.length) {
+                case 1:
+                    return "img-1"
+                    break;
+                case 2:
+                    return "img-2"
+                    break;
+                case 3:
+                    return "img-3"
+                    break;
+                case 4:
+                    return "img-4"
+                    break;
+            
+                case 5:
+                    return "img-5"
+                    break;
+            }
         }
         //     axios.get('https://api.tomtom.com/map/1/tile/basic/main/0/0/0.png',
         //         {
@@ -185,8 +215,69 @@ export default {
     &:last-child::after {
         display: none;
     }
+}
 
+.ms_img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    transition: all 300ms cubic-bezier(.64,0,.28,.98);
 
+    &:hover {
+        transform: scale(110%);
+        box-shadow: 0px 9px 37px 4px rgba(0,0,0,0.82);
+        cursor: pointer;
+    }
+}
+
+.ms_col-5{
+    max-height: 500px;
+}
+.ms_col-7 {
+    max-height: 500px;
+}
+
+.extra-image-container {
+
+    &.img-1 {
+        width: 100%;
+        height: 100%;
+    }
+    
+    &.img-2 {
+        width: 100%;
+        height: 50%;
+    }
+
+    &.img-3 {
+        width: 50%;
+        height: 50%;
+    }
+    &.img-3:first-child {
+        width: 100%;
+        height: 50%;
+    }
+
+    &.img-4 {
+        width: 50%;
+        height: 50%;
+    }
+
+    &.img-5 {
+        width: 50%;
+        height: calc(100% / 3);
+    }
+    &.img-5:first-child {
+        width: 100%;
+        height: calc(100% / 3);
+    }
+
+    .extra-image {
+        object-fit: cover;
+        object-position: center;
+        height: 100%;
+    }
 }
 
 #map-container {
