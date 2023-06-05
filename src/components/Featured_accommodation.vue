@@ -8,8 +8,9 @@
         <div class="container">
             <div class="row justify-content-center">
 
-                <div v-for="apartment in apartmentsSponsored" :key="apartment.id"
-                    class="col-sm-6 col-md-4 col-lg-3 card-spacer ms-col">
+
+
+                <div v-for="apartment in apartmentsSponsored" :key="apartment.id" class="col-sm-6 col-lg-4 col-xl-3 card-spacer ms-col">
                     <router-link :to="{ name: 'dettaglio-appartamento', params: { slug: apartment.slug } }" class="card">
                         <img class="card-img" :src="apartment.cover_path" alt="immagine">
                         <div class="card-description">
@@ -19,19 +20,27 @@
                             <p class="card-location">{{ apartment.city }}</p>
 
                             <div class="icon-info">
-                                <div class="card-icon-summary">
+
+                                <div class="icon-flex">
+
+                                    <div class="card-icon-summary">
                                     <font-awesome-icon class="icon-color" :icon="['fas', 'bed']" />
                                     <p>{{ apartment.beds }}</p>
+                                    </div>
+
+                                    <div class="card-icon-summary">
+                                        <font-awesome-icon class="icon-color" :icon="['fas', 'user']" />
+                                        <p>{{ apartment.rooms }}</p>
+                                    </div>
+
+                                    <div class="card-icon-summary">
+                                        <font-awesome-icon class="icon-color" :icon="['fas', 'shower']" />
+                                        <p>{{ apartment.bathrooms }}</p>
+                                    </div>
+
                                 </div>
-                                <div class="card-icon-summary">
-                                    <font-awesome-icon class="icon-color" :icon="['fas', 'user']" />
-                                    <p>{{ apartment.rooms }}</p>
-                                </div>
-                                <div class="card-icon-summary">
-                                    <font-awesome-icon class="icon-color" :icon="['fas', 'shower']" />
-                                    <p>{{ apartment.bathrooms }}</p>
-                                </div>
-                                <div class="card-price-summary ms-3">
+
+                                <div class="card-price-summary fs-4 ms-3">
                                     <p>{{ apartment.price }}&euro;</p>
                                 </div>
                             </div>
@@ -94,7 +103,13 @@ export default {
         margin-bottom: 20px;
         color: currentColor;
         text-decoration: none;
-        height: 300px;
+        height: 100%;
+
+        .icon-flex{
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
 
         .card:hover {
             .card-img {
@@ -145,7 +160,7 @@ export default {
 
         .card-price-summary {
 
-            font-size: 28px;
+            // font-size: 28px;
 
             p {
                 margin: 0;
@@ -154,7 +169,7 @@ export default {
 
         .icon-info {
             display: flex;
-            gap: 20px;
+            justify-content: space-between;
             align-items: baseline;
             margin-top: auto;
         }

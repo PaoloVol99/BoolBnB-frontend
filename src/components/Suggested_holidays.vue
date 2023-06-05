@@ -8,7 +8,9 @@
         <div class="container">
             <div class="row justify-content-center">
 
-                <div class="col-sm-6 col-md-4 col-lg-3 card-spacer ms-col">
+                
+                
+                <div class="col-md-6 col-lg-3 card-spacer ms-col">
                     <div class="card">
                         <img class="card-img" src="/firenze.png" alt="immagine">
                         <h4 class="card-title">Firenze</h4>
@@ -17,10 +19,8 @@
                         </router-link>
                     </div>
                 </div>
-
-
-
-                <div class=" col-sm-6 col-md-4 col-lg-3 card-spacer ms-col">
+                
+                <div class="col-md-6 col-lg-3 card-spacer ms-col">
                     <div class="card">
                         <img class="card-img" src="/venezia.jpg" alt="immagine">
                         <h4 class="card-title">Venezia</h4>
@@ -30,7 +30,7 @@
                     </div>
                 </div>
 
-                <div class="col-sm-6 col-md-4 col-lg-3 card-spacer ms-col">
+                <div class="col-md-6 col-lg-3 card-spacer ms-col">
                     <div class="card">
                         <img class="card-img" src="/matera.png" alt="immagine">
                         <h4 class="card-title">Matera</h4>
@@ -40,7 +40,7 @@
                     </div>
                 </div>
 
-                <div class="col-sm-6 col-md-4 col-lg-3 card-spacer ms-col">
+                <div class="col-md-6 col-lg-3 card-spacer ms-col">
                     <div class="card">
                         <img class="card-img" src="/roma.png" alt="immagine">
                         <h4 class="card-title">Roma</h4>
@@ -84,6 +84,7 @@ export default {
         color: white;
         border-radius: 20px;
         height: 100%;
+        aspect-ratio: 1.2/2;
 
         .card-others {
             font-size: 18px;

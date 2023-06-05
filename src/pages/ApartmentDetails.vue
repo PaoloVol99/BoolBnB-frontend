@@ -47,6 +47,7 @@
                             <span class="fs-4">{{ apartment.sqm }} &#13217;</span>
                         </div>
 
+
                         <form class=" messages-form" @submit.prevent="sendForm">
                             <h4>Manda un messaggio al proprietario</h4>
                             <div>
@@ -129,6 +130,7 @@ export default {
             console.log(data)
             axios.post("http://127.0.0.1:8000/api/messages", data)
                 .then((res) => {
+
                     this.MessageSent = true
                     this.name = '',
                         this.email = '',
