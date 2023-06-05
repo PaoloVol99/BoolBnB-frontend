@@ -1,19 +1,19 @@
 <template>
     <div>
-        <div class="container">
-            <div class="ms_form-container position-relative">
-                <input class="ms_input" v-model="searchBox" @keyup="fetchResults()" type="text">
-                <div class="ms_autocomplete-container position-absolute z-index-2">
-                    <div class="autocomplete z-index-2" v-for="(result, i) in results" @click="selectResult(i)">
-                        {{ result.address.freeformAddress }}
-                    </div>
+        <!-- <div class="container"> -->
+        <div class="ms_form-container position-relative">
+            <input class="ms_input" v-model="searchBox" @keyup="fetchResults()" type="text" placeholder="Dove vuoi andare?">
+            <div class="ms_autocomplete-container position-absolute z-index-2">
+                <div class="autocomplete z-index-2" v-for="(result, i) in results" @click="selectResult(i)">
+                    {{ result.address.freeformAddress }}
                 </div>
-                <!-- <button class="btn btn-primary rounded-pill" @click="fetchApartments()">Cerca</button> -->
-                <router-link :to="{ name: 'ricerca-avanzata' }">
-                    <button class="btn btn-primary rounded-pill" @click="fetchApartments()">Cerca</button>
-                </router-link>
             </div>
+            <!-- <button class="btn btn-primary rounded-pill" @click="fetchApartments()">Cerca</button> -->
+            <router-link :to="{ name: 'ricerca-avanzata' }">
+                <button class="searchbutton fs-5" @click="fetchApartments()">Cerca</button>
+            </router-link>
         </div>
+        <!-- </div> -->
     </div>
 </template>
 
@@ -181,29 +181,23 @@ export default {
 <style lang="scss" scoped>
 @use '../style/partials/variables.scss' as *;
 
-.ms_form-container {
-    display: flex;
-    align-items: center;
-    margin: 0 auto;
-}
-
 .ms_autocomplete-container {
-    width: 90%;
-    left: 20px;
-    top: 80px;
+    width: 100%;
+    // left: 20px;
+    top: 68px;
     margin-top: -18px;
     z-index: 999;
 }
 
 .ms_input {
-    width: 90%;
-    margin: 20px;
+    width: 100%;
+    // margin: 20px;
     display: block;
     background-color: rgb(234, 234, 234);
     border: none;
     color: black;
     border-radius: 999px;
-    padding: 8px 25px;
+    padding: 12px 25px;
 
     &:focus-visible {
         outline: 2px solid $primary-color;
@@ -238,6 +232,16 @@ export default {
         margin-bottom: 10px;
         border-radius: 0 0 10px 10px;
     }
+}
+
+.searchbutton {
+    border: none;
+    width: 100%;
+    border-radius: 999px;
+    margin-top: 10px;
+    line-height: 40px;
+    background-color: $primary-color;
+    color: white;
 }
 
 .autocomplete:hover {
