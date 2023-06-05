@@ -90,6 +90,8 @@ export default {
         overflow: hidden;
         box-shadow: 0 1px 20px rgba(0, 0, 0, 0.171);
         margin-bottom: 20px;
+        color: currentColor;
+        text-decoration: none;
 
         .card:hover {
             .card-img {
