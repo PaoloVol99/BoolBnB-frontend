@@ -37,7 +37,7 @@
                     </p>
                     <h4 class="mt-3">Dove si trova:</h4>
                     <div class="mb-4" id="map-container">
-    
+
                     </div>
                 </div>
                 <div class="col-xl-4 col-sm-12">
@@ -54,11 +54,13 @@
                             </div>
                             <div>
                                 <!-- <label for="email">Indirizzo email</label> -->
-                                <input type="text" v-model="email" id="email" name="email" placeholder="Il tuo indirizzo email">
+                                <input type="text" v-model="email" id="email" name="email"
+                                    placeholder="Il tuo indirizzo email">
                             </div>
                             <div>
                                 <!-- <label for="text">Messaggio</label> -->
-                                <textarea type="text" v-model="text" id="text" name="text" placeholder="Scrivi il tuo messaggio"></textarea>
+                                <textarea type="text" v-model="text" id="text" name="text"
+                                    placeholder="Scrivi il tuo messaggio"></textarea>
                             </div>
                             <input class="d-none" type="number" v-model="apartment.id">
                             <button type="submit">Invia</button>
@@ -107,12 +109,12 @@ export default {
         fetchApartment() {
             console.log("slug", this.slug)
             axios.get(`http://127.0.0.1:8000/api/apartments/${this.slug}`)
-            .then((res) => {
-                console.log("api",res.data.apartment)
-                this.apartment = res.data.apartment
-                console.log("appartamento", this.apartment)
-                this.fetchMap();
-            })
+                .then((res) => {
+                    console.log("api", res.data.apartment)
+                    this.apartment = res.data.apartment
+                    console.log("appartamento", this.apartment)
+                    this.fetchMap();
+                })
 
         },
         sendForm() {
@@ -163,7 +165,7 @@ export default {
                 case 4:
                     return "img-4"
                     break;
-            
+
                 case 5:
                     return "img-5"
                     break;
@@ -227,23 +229,24 @@ export default {
     height: 100%;
     object-fit: cover;
     object-position: center;
-    transition: all 300ms cubic-bezier(.64,0,.28,.98);
+    transition: all 300ms cubic-bezier(.64, 0, .28, .98);
     border-radius: 10px;
 
     &:hover {
         transform: scale(104%);
-        box-shadow: 0px 9px 37px 4px rgba(0,0,0,0.55);
+        box-shadow: 0px 9px 37px 4px rgba(0, 0, 0, 0.55);
         cursor: pointer;
     }
 }
 
 .icon-color {
-        color: $primary-color;
-    }
+    color: $primary-color;
+}
 
-.ms_col-5{
+.ms_col-5 {
     max-height: 500px;
 }
+
 .ms_col-7 {
     max-height: 500px;
     // margin-left: -0.75rem;
@@ -255,10 +258,11 @@ export default {
         width: 100%;
         height: 100%;
     }
-    
+
     &.img-2 {
         width: 100%;
         height: 50%;
+
         // padding-top: 0.25rem;
         &:first-child {
             // padding-bottom: 0.25rem;
@@ -271,6 +275,7 @@ export default {
         height: 50%;
         // padding-top: 0.25rem;
     }
+
     &.img-3:first-child {
         width: 100%;
         height: 50%;
@@ -281,11 +286,13 @@ export default {
     &.img-4 {
         width: 50%;
         height: 50%;
+
         // padding-top: 0.25rem;
         &:first-child {
             padding-top: 0;
+
             // padding-bottom: 0.25rem;
-            & + div {
+            &+div {
                 padding-top: 0;
                 // padding-bottom: 0.25rem;
             }
@@ -297,18 +304,19 @@ export default {
         height: calc(100% / 3);
         // padding-top: 0.25rem;
     }
+
     &.img-5:first-child {
         width: 100%;
         height: calc(100% / 3);
         padding-top: 0;
         // padding-bottom: 0.25rem;
 
-        & + div {
-            // padding-bottom: 0.25rem;
-            & + div {
-                // padding-bottom: 0.25rem;
-            }
-        }
+        // & + div {
+        //     // padding-bottom: 0.25rem;
+        //     & + div {
+        //         // padding-bottom: 0.25rem;
+        //     }
+        // }
     }
 
     .extra-image {
@@ -356,7 +364,7 @@ export default {
     border-radius: 15px;
     color: white;
 
-    
+
     h4 {
         margin-bottom: 25px;
     }
@@ -386,5 +394,4 @@ export default {
         padding: 5px 15px;
         border-radius: 999px;
     }
-}
-</style>
+}</style>
