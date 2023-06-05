@@ -24,10 +24,10 @@
                             avanzata</router-link>
                     </li>
 
-                    <li v-if="this.store.userName">
-                        <a class="ms_a" href="http://127.0.0.1:8000/login">{{ this.store.userName }}</a></li>
-                    <li v-else class="nav-item mx-2">
-                        <a class="nav-link submit-bottom active rounded-3" aria-current="page" href="http://127.0.0.1:8000/login">Iscriviti</a>
+                    <li class="nav-item mx-2">
+                        <a class="nav-link submit-bottom active rounded-3" aria-current="page"
+                            href="http://127.0.0.1:8000/login">{{ this.store.userName ? this.store.userName : 'Iscriviti'
+                            }}</a>
                     </li>
 
 
@@ -43,7 +43,7 @@ import store from '../store';
 export default {
     data() {
         return {
-        store 
+            store
         }
     }
 }
