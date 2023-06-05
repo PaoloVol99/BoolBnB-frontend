@@ -3,9 +3,9 @@
         <div class="container">
 
             <!-- LOGO -->
-            <a class="navbar-brand ms_navbar-brand" href="#">
-                <img class="ms_img" src="logo-boolbnb-nero.png" alt="Logo">
-            </a>
+            <router-link class="navbar-brand ms_navbar-brand" :to="{ name: 'home' }">
+                <img class="ms_img" src="/logo-boolbnb-nero.png" alt="Logo">
+            </router-link>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -25,9 +25,11 @@
                     </li>
 
                     <li v-if="this.store.userName">
-                        <a class="ms_a" href="http://127.0.0.1:8000/login">{{ this.store.userName }}</a></li>
+                        <a class="ms_a" href="http://127.0.0.1:8000/login">{{ this.store.userName }}</a>
+                    </li>
                     <li v-else class="nav-item mx-2">
-                        <a class="nav-link submit-bottom active rounded-3" aria-current="page" href="http://127.0.0.1:8000/login">Iscriviti</a>
+                        <a class="nav-link submit-bottom active rounded-3" aria-current="page"
+                            href="http://127.0.0.1:8000/login">Iscriviti</a>
                     </li>
 
 
@@ -43,7 +45,7 @@ import store from '../store';
 export default {
     data() {
         return {
-        store 
+            store
         }
     }
 }
