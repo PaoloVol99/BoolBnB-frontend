@@ -8,13 +8,15 @@
         <div class="container">
             <div class="row justify-content-center">
 
-                <div v-for="apartment in apartmentsSponsored" :key="apartment.id"
-                    class="col-sm-6 col-md-4 col-lg-3 card-spacer ms-col">
+                <div v-for="apartment in apartmentsSponsored" :key="apartment.id" class="col-sm-6 col-md-4 col-lg-3 card-spacer ms-col">
                     <router-link :to="{ name: 'dettaglio-appartamento' }" class="card">
                         <img class="card-img" src="/firenze.png" alt="immagine">
                         <div class="card-description">
+
                             <h4 class="card-title">{{ apartment.title }}</h4>
+
                             <p class="card-location">{{ apartment.city }}</p>
+
                             <div class="icon-info">
                                 <div class="card-icon-summary">
                                     <font-awesome-icon class="icon-color" :icon="['fas', 'bed']" />
@@ -92,6 +94,7 @@ export default {
         margin-bottom: 20px;
         color: currentColor;
         text-decoration: none;
+        height: 300px;
 
         .card:hover {
             .card-img {
@@ -112,9 +115,9 @@ export default {
         }
 
         .card-description {
-            position: relative;
-            bottom: 0;
-            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
             padding: 10px;
             background-color: white;
         }
@@ -153,6 +156,7 @@ export default {
             display: flex;
             gap: 20px;
             align-items: baseline;
+            margin-top: auto;
         }
     }
 
