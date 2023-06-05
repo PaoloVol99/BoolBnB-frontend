@@ -130,7 +130,7 @@ export default {
             console.log(data)
             axios.post("http://127.0.0.1:8000/api/messages", data)
                 .then((res) => {
-
+                    console.log(data)
                     this.MessageSent = true
                     this.name = '',
                         this.email = '',
@@ -368,7 +368,7 @@ export default {
     border-radius: 25px;
     margin-bottom: 20px;
     font-size: 16px;
-    width: 40%;
+    width: 80%;
     display: flex;
     justify-content: center;
     align-items: center;
