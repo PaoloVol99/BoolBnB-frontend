@@ -14,8 +14,8 @@ import { library } from '@fortawesome/fontawesome-svg-core'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
 
 /* import specific icons */
-// import { } from '@fortawesome/free-regular-svg-icons'
-import {faUser, faBed, faShower, faDoorClosed} from '@fortawesome/free-solid-svg-icons'
+import { faCircleCheck } from '@fortawesome/free-regular-svg-icons'
+import { faUser, faBed, faShower, faDoorClosed } from '@fortawesome/free-solid-svg-icons'
 // import {  } from '@fortawesome/free-brands-svg-icons'
 
 /* add icons to the library */
@@ -23,14 +23,15 @@ library.add(
     faUser,
     faBed,
     faShower,
-    faDoorClosed
+    faDoorClosed,
+    faCircleCheck
 )
 
 
 // router
-import {router} from './router'
+import { router } from './router'
 
 createApp(App)
-.component('font-awesome-icon', FontAwesomeIcon)
-.use(router)
-.mount('#app')
+    .component('font-awesome-icon', FontAwesomeIcon)
+    .use(router)
+    .mount('#app')
