@@ -158,26 +158,30 @@
             <div class="container py-3">
                 <div class="row justify-content-center">
                     <div v-for="apartment in this.advanceApartments" :key="apartment.id"
-                        class="col-sm-6 col-md-4 col-lg-3 ms-col">
+                        class="col-sm-6 col-lg-4 col-xl-3 ms-col gy-3">
                         <router-link :to="{ name: 'dettaglio-appartamento', params: { slug: apartment.slug} }" class="card">
                             <img class="card-img" :src="apartment.cover_path" alt="immagine">
                             <div class="card-description">
                                 <h4 class="card-title">{{ apartment.title }}</h4>
                                 <p class="card-location">{{ apartment.city }}</p>
                                 <div class="icon-info">
-                                    <div class="card-icon-summary">
-                                        <font-awesome-icon class="icon-color" :icon="['fas', 'bed']" />
-                                        <p>{{ apartment.beds }}</p>
+                                    <div class="icon-flex">
+
+                                        <div class="card-icon-summary">
+                                            <font-awesome-icon class="icon-color" :icon="['fas', 'bed']" />
+                                            <p>{{ apartment.beds }}</p>
+                                        </div>
+                                        <div class="card-icon-summary">
+                                            <font-awesome-icon class="icon-color" :icon="['fas', 'door-closed']" />
+                                            <p>{{ apartment.rooms }}</p>
+                                        </div>
+                                        <div class="card-icon-summary">
+                                            <font-awesome-icon class="icon-color" :icon="['fas', 'shower']" />
+                                            <p>{{ apartment.bathrooms }}</p>
+                                        </div>
+
                                     </div>
-                                    <div class="card-icon-summary">
-                                        <font-awesome-icon class="icon-color" :icon="['fas', 'door-closed']" />
-                                        <p>{{ apartment.rooms }}</p>
-                                    </div>
-                                    <div class="card-icon-summary">
-                                        <font-awesome-icon class="icon-color" :icon="['fas', 'shower']" />
-                                        <p>{{ apartment.bathrooms }}</p>
-                                    </div>
-                                    <div class="card-price-summary ms-3">
+                                    <div class="card-price-summary fs-4 ms-3">
                                         <p>{{ apartment.price }}&euro;</p>
                                     </div>
                                 </div>
@@ -580,9 +584,16 @@ export default {
 .card {
     overflow: hidden;
     box-shadow: 0 1px 20px rgba(0, 0, 0, 0.171);
-    margin-bottom: 20px;
     color: currentColor;
     text-decoration: none;
+    height: 100%;
+    
+
+    .icon-flex{
+            display: flex;
+            gap: 10px;
+            align-items: center;
+        }
 
     .card:hover {
         .card-img {
@@ -603,10 +614,10 @@ export default {
     }
 
     .card-description {
-        position: relative;
-        bottom: 0;
-        margin: 0 auto;
-        padding: 10px;
+        display: flex;
+        flex-direction: column;
+        height: 100%;
+        padding: 10px 20px;
         background-color: white;
     }
 
@@ -646,8 +657,9 @@ export default {
 
     .icon-info {
         display: flex;
-        gap: 20px;
         align-items: baseline;
+        justify-content: space-between;
+        margin-top: auto;
     }
 }
 
