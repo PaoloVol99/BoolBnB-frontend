@@ -9,7 +9,7 @@
             <div class="row justify-content-center">
 
                 <div v-for="apartment in apartmentsSponsored" :key="apartment.id" class="col-sm-6 col-md-4 col-lg-3 card-spacer ms-col">
-                    <router-link :to="{ name: 'dettaglio-appartamento' }" class="card">
+                    <router-link :to="{ name: 'dettaglio-appartamento', params: { slug: apartment.slug } }" class="card">
                         <img class="card-img" src="/firenze.png" alt="immagine">
                         <div class="card-description">
 
@@ -67,7 +67,6 @@ export default {
                     if (apartment.sponsorships && apartment.sponsorships.length > 0) {
                         this.apartmentsSponsored.push(apartment)
                     }
-                    console.log(this.apartmentsSponsored, 'quelli con lo sponsor')
                 })
             })
     }
