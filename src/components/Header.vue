@@ -25,8 +25,9 @@
                     </li>
 
                     <li class="nav-item mx-2">
+
                         <a class="nav-link submit-bottom active rounded-3" aria-current="page" @click="PresetUser"
-                            href="http://127.0.0.1:8000/login">{{ this.store.userName ? this.store.userName : 'Iscriviti'
+                            href="http://127.0.0.1:8000/register">{{ this.store.userName ? this.store.userName : 'Iscriviti'
                             }}</a>
                     </li>
 
