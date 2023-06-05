@@ -19,7 +19,7 @@ const router = createRouter({
             component: Advance_search
         },
         {
-            path: '/dettaglio-appartamento',
+            path: '/dettaglio-appartamento/:slug',
             name: 'dettaglio-appartamento',
             component: ApartmentDetails,
             props: true
@@ -27,7 +27,7 @@ const router = createRouter({
         {
             path: '/ispirazione-estiva',
             name: 'apartments',
-            component: Suggested_city
+            component: Suggested_city,
         }
     ]
 })

@@ -6,11 +6,11 @@
             <span>{{ apartment.address + ', ' + apartment.city }}</span>
             <div class="row ms_row my-3">
                 <div class="col-xl-7 col-sm-12 ms_col-5 py-1">
-                    <img class="ms_img" :src="apartment.cover_image" alt="">
+                    <img class="ms_img" :src="apartment.cover_path" alt="">
                 </div>
                 <div class="col-xl-5 col-sm-12 ms_col-7 d-flex flex-wrap gx-3">
                     <div class="extra-image-container p-1" v-for="image in apartment.images" :class="extraImagesLayout()">
-                        <img class="ms_img extra-image" :src="image" alt="">
+                        <img class="ms_img extra-image" :src="image.image_path" alt="">
                     </div>
                 </div>
             </div>
@@ -28,17 +28,7 @@
                     <p class="mb-0">{{ apartment.bathrooms }} bagni</p>
                 </div>
             </div>
-            <!-- <div class="specifications d-flex">
-                <span class="spec">
-                    {{ apartment.beds }} posti letto
-                </span>
-                <span class="spec">
-                    {{ apartment.rooms }} stanze
-                </span>
-                <span class="spec">
-                    {{ apartment.bathrooms }} bagni
-                </span>
-            </div> -->
+
             <div class="row">
                 <div class="col-xl-8 col-sm-12">
                     <h4>Qualcosa in più sull'appartamento:</h4>
@@ -98,34 +88,10 @@ import store from '../store';
 
 
 export default {
+    props: ['slug'],
     data() {
         return {
-            apartment: {
-                "id": 108,
-                "user_id": 18,
-                "title": "Villa di Lusso con Vista Mare e Piscina Privata",
-                "rooms": 15,
-                "beds": 8,
-                "bathrooms": 5,
-                "sqm": 180,
-                "address": "Borgo Brigitta 8 Appartamento 16",
-                "city": "Roma",
-                "lat": -2.49216,
-                "lng": 167.54753,
-                "visibility": 1,
-                "price": "324.00",
-                "description": "Sint vel sed non pariatur cumque. Aut et eos aspernatur rerum quas. Velit consequatur placeat aut voluptas laboriosam iure voluptates. Qui iste iste dolor aut. Tempora sequi ducimus eum. Nesciunt nisi minima inventore aut quaerat.",
-                "cover_image": "https://www.relocatemagazine.com/media/images/scarpa-16_14791_compressed_31FCD1C449F3178CE482BACDE88E7BA5.jpg",
-                "slug": "villa-di-lusso-con-vista-mare-e-piscina-privata",
-                "images": [
-                    "https://www.home-designing.com/wp-content/uploads/2017/10/white-sectional-sofa.jpg",
-                    "https://cf.bstatic.com/xdata/images/hotel/max1024x768/327944475.jpg?k=3e320affa2acb80527145ad11f51e9f25f28b8d6abfb032bdfa5e7bcee4bb8b9&o=&hp=1",
-                    "https://www.bridgeland.com/wp-content/uploads/2022/11/BL_MF_StarlingBridgeland-67.jpg",
-                    "https://static.theceomagazine.net/wp-content/uploads/2020/09/04114637/luxury-apartments.jpg",
-                    "https://www.engelvoelkers.com/images/306f49cc-17b5-46a5-ac78-b9088bfad171/modern-luxury-apartments-with-mediterranean-flair-in-the-heart-of-the-southwest-",
-
-                ]
-            },
+            apartment: {},
             store,
             name: store.userName,
             email: store.userEmail,
@@ -138,6 +104,17 @@ export default {
         };
     },
     methods: {
+        fetchApartment() {
+            console.log("slug", this.slug)
+            axios.get(`http://127.0.0.1:8000/api/apartments/${this.slug}`)
+            .then((res) => {
+                console.log("api",res.data.apartment)
+                this.apartment = res.data.apartment
+                console.log("appartamento", this.apartment)
+                this.fetchMap();
+            })
+
+        },
         sendForm() {
             let data = {
                 name: this.name,
@@ -152,8 +129,11 @@ export default {
                 })
         },
         fetchMap() {
-
-            let center = [9.093420, 45.274068]
+            let lng = parseFloat(this.apartment.lng)
+            let lat = parseFloat(this.apartment.lat)
+            console.log(lng, lat)
+            let center = [lng, lat]
+            console.log("center", center)
             const map = tt.map({
                 key: '5yE1GYuQA7WyAdPZ1zAeJtBq8cKtoae3',
                 container: "map-container",
@@ -215,7 +195,7 @@ export default {
 
     },
     mounted() {
-        this.fetchMap();
+        this.fetchApartment();
     },
     components: { Default }
 }
