@@ -8,8 +8,8 @@
         <div class="container">
             <div class="row justify-content-center">
 
-                
-                
+
+
                 <div class="col-md-6 col-lg-3 card-spacer ms-col">
                     <div class="card">
                         <img class="card-img" src="/firenze.png" alt="immagine">
@@ -19,7 +19,7 @@
                         </router-link>
                     </div>
                 </div>
-                
+
                 <div class="col-md-6 col-lg-3 card-spacer ms-col">
                     <div class="card">
                         <img class="card-img" src="/venezia.jpg" alt="immagine">
@@ -73,10 +73,10 @@ export default {
         font-size: 26px;
     }
 
-    .card-spacer {
-        margin-bottom: 20px;
-        padding: 0 20px;
-    }
+    // .card-spacer {
+    //     margin-bottom: 20px;
+    //     padding: 0 20px;
+    // }
 
     .card {
         overflow: hidden;

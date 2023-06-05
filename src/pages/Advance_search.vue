@@ -18,7 +18,8 @@
                                 <div class="ms_form-container position-relative">
                                     <input class="ms_input" v-model="searchBox" @keyup="fetchResults()" type="text">
                                     <div class="ms_autocomplete-container position-absolute z-index-2">
-                                        <div class="autocomplete z-index-2" v-for="(result, i) in results" @click="selectResult(i)">
+                                        <div class="autocomplete z-index-2" v-for="(result, i) in results"
+                                            @click="selectResult(i)">
                                             {{ result.address.freeformAddress }}
                                         </div>
                                     </div>
@@ -42,7 +43,9 @@
                     <div class="col-auto col-md-2">
                         <div class="d-flex flex-column gap-2">
                             <h5 class="display-tablet-desktop">N. letti</h5>
-                            <input v-model="bedsFilter" @change="filterApartments" class="bedsFilterSearch input_number display-tablet-desktop" type="number" id="beds" name="beds" placeholder="1">
+                            <input v-model="bedsFilter" @change="filterApartments"
+                                class="bedsFilterSearch input_number display-tablet-desktop" type="number" id="beds"
+                                name="beds" placeholder="1">
                         </div>
                     </div>
 
@@ -55,7 +58,8 @@
 
                     <!-- bottone altri filtri -->
                     <div class="col-auto">
-                        <a class="d-block btn ms-button-secondary ms-button" data-bs-toggle="offcanvas" href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
+                        <a class="d-block btn ms-button-secondary ms-button" data-bs-toggle="offcanvas"
+                            href="#offcanvasExample" role="button" aria-controls="offcanvasExample">
                             Altri filtri
                         </a>
                     </div>
@@ -97,7 +101,8 @@
                         <div class="filter-section price-filter-box">
                             <h5>Prezzo minimo a notte</h5>
                             <div class="d-flex align-items-center">
-                                <input v-model="priceFilter" class="price-filter" type="range" id="price-filter" name="price-filter" min="20" max="500" step="1">
+                                <input v-model="priceFilter" class="price-filter" type="range" id="price-filter"
+                                    name="price-filter" min="20" max="500" step="1">
                                 <span id="price-label" class="price-label">{{ priceFilter }}&euro;</span>
                             </div>
                         </div>
@@ -105,7 +110,8 @@
                         <div class="filter-section">
                             <h5>Distanza dal centro</h5>
                             <div class="d-flex align-items-center">
-                                <input v-model="rangeFilter" class="price-filter" type="range" id="price-filter" name="price-filter" min="1" max="150" step="1" @change="rangeMap">
+                                <input v-model="rangeFilter" class="price-filter" type="range" id="price-filter"
+                                    name="price-filter" min="1" max="150" step="1" @change="rangeMap">
                                 <span id="price-label" class="price-label">{{ rangeFilter }} km</span>
                             </div>
                         </div>
@@ -136,14 +142,16 @@
                                 </template>
                             </template>
                             <!-- Bottone per mostrare altri servizi -->
-                            <button class="btn ms-button ms-button-secondary ms-other-services" @click="fetchOtherServices()">{{ displayService
-                                == "d-none" ? "mostra altri" : "nascondi" }}</button>
+                            <button class="btn ms-button ms-button-secondary ms-other-services"
+                                @click="fetchOtherServices()">{{ displayService
+                                    == "d-none" ? "mostra altri" : "nascondi" }}</button>
                         </div>
 
                         <!-- Bottone per applicare i filtri -->
                         <div class="d-flex flex-column gap-2">
                             <button class="apply-filters ms-button" @click="filterApartments">Applica filtri</button>
-                            <button class="apply-filters ms-button ms-button-secondary" @click="resetFilters">Reset filtri</button>
+                            <button class="apply-filters ms-button ms-button-secondary" @click="resetFilters">Reset
+                                filtri</button>
                         </div>
 
                     </div>
@@ -156,10 +164,10 @@
 
             <!-- Lista appartamenti -->
             <div class="container py-3">
-                <div class="row justify-content-center">
+                <div class="row ">
                     <div v-for="apartment in this.advanceApartments" :key="apartment.id"
                         class="col-sm-6 col-lg-4 col-xl-3 ms-col gy-3">
-                        <router-link :to="{ name: 'dettaglio-appartamento', params: { slug: apartment.slug} }" class="card">
+                        <router-link :to="{ name: 'dettaglio-appartamento', params: { slug: apartment.slug } }" class="card">
                             <img class="card-img" :src="apartment.cover_path" alt="immagine">
                             <div class="card-description">
                                 <h4 class="card-title">{{ apartment.title }}</h4>
@@ -228,8 +236,8 @@ export default {
         Default,
         Searchbar,
     },
-    computed:{
-        getApartmentsStore(){
+    computed: {
+        getApartmentsStore() {
             return this.store.filterApartments
         }
     },
@@ -388,14 +396,14 @@ export default {
         },
         fetchServices() {
             axios.get("http://127.0.0.1:8000/api/services")
-            .then((res) => {
-                this.services = res.data.results
-            })
+                .then((res) => {
+                    this.services = res.data.results
+                })
         },
-        fetchApartmentResults(){
+        fetchApartmentResults() {
             // se non abbiamo selezionato nessun servizio, stampiamo tutti gli appartamenti che riceviamo dalla ricerca
             if (this.serviceFilter.length == 0) {
-            this.advanceApartments = this.store.filteredApartments
+                this.advanceApartments = this.store.filteredApartments
             }
         },
         filterApartments() {
@@ -429,7 +437,7 @@ export default {
             })
 
         },
-        resetFilters(){
+        resetFilters() {
             // ristampiamo tutti gli appartamenti in base alla città
             this.advanceApartments = this.store.filteredApartments
 
@@ -446,7 +454,7 @@ export default {
     },
     created() {
         this.fetchServices(),
-        this.fetchApartmentResults()
+            this.fetchApartmentResults()
     }
 }
 </script>
@@ -491,7 +499,7 @@ export default {
     }
 }
 
-.price-filter-box{
+.price-filter-box {
     margin-bottom: 20px;
 }
 
@@ -503,7 +511,7 @@ export default {
     display: none;
 }
 
-.searchbar-el{
+.searchbar-el {
     text-align: center;
     margin-bottom: 15px;
 }
@@ -515,10 +523,11 @@ export default {
 }
 
 @media screen and (min-width: 768px) {
-    .searchbar-el{
-    text-align: start;
+    .searchbar-el {
+        text-align: start;
         margin-bottom: 0;
     }
+
     .offcanvas {
         width: 40%;
     }
@@ -558,15 +567,18 @@ export default {
     border: none;
     border-radius: 999px;
 }
-.ms-button:hover{
+
+.ms-button:hover {
     background-color: #60d2df;
 }
-.ms-button-secondary{
+
+.ms-button-secondary {
     color: $primary-color;
     background-color: white;
     border: 1px solid $primary-color;
 }
-.ms-button-secondary:hover{
+
+.ms-button-secondary:hover {
     color: white;
     background-color: $primary-color;
 }
@@ -577,7 +589,7 @@ export default {
     margin-top: 10px;
 }
 
-.bedsFilterSearch{
+.bedsFilterSearch {
     width: 100%;
 }
 
@@ -587,13 +599,13 @@ export default {
     color: currentColor;
     text-decoration: none;
     height: 100%;
-    
 
-    .icon-flex{
-            display: flex;
-            gap: 10px;
-            align-items: center;
-        }
+
+    .icon-flex {
+        display: flex;
+        gap: 10px;
+        align-items: center;
+    }
 
     .card:hover {
         .card-img {
@@ -717,5 +729,4 @@ export default {
     &+.autocomplete {
         border: none;
     }
-}
-</style>
+}</style>

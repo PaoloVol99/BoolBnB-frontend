@@ -6,11 +6,12 @@
         </div>
 
         <div class="container">
-            <div class="row justify-content-center">
+            <div class="row ">
 
 
 
-                <div v-for="apartment in apartmentsSponsored" :key="apartment.id" class="col-sm-6 col-lg-4 col-xl-3 card-spacer ms-col">
+                <div v-for="apartment in apartmentsSponsored" :key="apartment.id"
+                    class="col-sm-6 col-lg-4 col-xl-3 card-spacer ms-col">
                     <router-link :to="{ name: 'dettaglio-appartamento', params: { slug: apartment.slug } }" class="card">
                         <img class="card-img" :src="apartment.cover_path" alt="immagine">
                         <div class="card-description">
@@ -24,8 +25,8 @@
                                 <div class="icon-flex">
 
                                     <div class="card-icon-summary">
-                                    <font-awesome-icon class="icon-color" :icon="['fas', 'bed']" />
-                                    <p>{{ apartment.beds }}</p>
+                                        <font-awesome-icon class="icon-color" :icon="['fas', 'bed']" />
+                                        <p>{{ apartment.beds }}</p>
                                     </div>
 
                                     <div class="card-icon-summary">
@@ -92,10 +93,10 @@ export default {
         font-size: 26px;
     }
 
-    .card-spacer {
-        margin-bottom: 20px;
-        padding: 0 20px;
-    }
+    // .card-spacer {
+    //     margin-bottom: 20px;
+    //     padding: 0 20px;
+    // }
 
     .card {
         overflow: hidden;
@@ -105,7 +106,7 @@ export default {
         text-decoration: none;
         height: 100%;
 
-        .icon-flex{
+        .icon-flex {
             display: flex;
             gap: 10px;
             align-items: center;
