@@ -29,7 +29,7 @@
                                     </div>
 
                                     <div class="card-icon-summary">
-                                        <font-awesome-icon class="icon-color" :icon="['fas', 'user']" />
+                                        <font-awesome-icon class="icon-color" :icon="['fas', 'door-closed']" />
                                         <p>{{ apartment.rooms }}</p>
                                     </div>
 
