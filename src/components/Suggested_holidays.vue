@@ -111,7 +111,7 @@ export default {
             filter: brightness(0.7);
             transition-duration: 0.5s;
             height: 100%;
-
+            object-fit: cover;
         }
     }
 
