@@ -46,7 +46,7 @@
                             <h3> &euro;{{ apartment.price }} a notte </h3>
                             <span class="fs-4">{{ apartment.sqm }} &#13217;</span>
                         </div>
-                        <form class="messages-form" @submit.prevent="sendForm">
+                        <form class="messages-form" @submit.prevent="sendForm" id="message">
                             <h4>Manda un messaggio al proprietario</h4>
                             <div>
                                 <!-- <label for="name">Nome</label> -->
@@ -127,7 +127,9 @@ export default {
             console.log(data)
             axios.post("http://127.0.0.1:8000/api/messages", data)
                 .then((res) => {
-                    console.log(data, 'sono data')
+                    if (res.data.success) {
+                        this.text = ''
+                    }
                 })
         },
         fetchMap() {
@@ -394,4 +396,5 @@ export default {
         padding: 5px 15px;
         border-radius: 999px;
     }
-}</style>
+}
+</style>
