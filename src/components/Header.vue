@@ -23,12 +23,14 @@
                         <router-link class="nav-link active" :to="{ name: 'ricerca-avanzata' }">Ricerca
                             avanzata</router-link>
                     </li>
-                    
+
                     <li class="nav-item mx-2">
-                        <a class="nav-link submit-bottom active rounded-3" aria-current="page"
-                            href="http://127.0.0.1:8000/register">{{ this.store.userName ? this.store.userName : 'Iscriviti' }}</a>
+
+                        <a class="nav-link submit-bottom active rounded-3" aria-current="page" @click="PresetUser"
+                            href="http://127.0.0.1:8000/register">{{ this.store.userName ? this.store.userName : 'Iscriviti'
+                            }}</a>
                     </li>
-                    
+
                 </ul>
             </div>
         </div>
@@ -43,8 +45,15 @@ export default {
         return {
             store
         }
+    },
+    methods: {
+        PresetUser() {
+            this.store.userName = '',
+                this.store.userEmail = ''
+        }
     }
 }
+
 </script>
 
 <style lang="scss" scoped>
