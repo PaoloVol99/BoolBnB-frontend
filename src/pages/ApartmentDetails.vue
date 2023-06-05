@@ -46,19 +46,17 @@
                             <h3> &euro;{{ apartment.price }} a notte </h3>
                             <span class="fs-4">{{ apartment.sqm }} &#13217;</span>
                         </div>
-                        <form class="messages-form" @submit.prevent="sendForm">
+
+                        <form class=" messages-form" @submit.prevent="sendForm">
                             <h4>Manda un messaggio al proprietario</h4>
                             <div>
-                                <!-- <label for="name">Nome</label> -->
                                 <input type="text" v-model="name" id="name" name="name" placeholder="Il tuo nome">
                             </div>
                             <div>
-                                <!-- <label for="email">Indirizzo email</label> -->
                                 <input type="text" v-model="email" id="email" name="email"
                                     placeholder="Il tuo indirizzo email">
                             </div>
                             <div>
-                                <!-- <label for="text">Messaggio</label> -->
                                 <textarea type="text" v-model="text" id="text" name="text"
                                     placeholder="Scrivi il tuo messaggio"></textarea>
                             </div>
@@ -66,16 +64,20 @@
                             <button type="submit">Invia</button>
                         </form>
 
+                        <div class="d-flex justify-content-center mt-3">
+                            <div v-if="MessageSent"
+                                class="specs-icon success-message text-center text-white custom-message ">
+                                <span class="me-2">Messaggio inviato con successo!</span>
+                                <font-awesome-icon class="check" :icon="['far', 'circle-check']" />
+                            </div>
+                        </div>
+
                     </div>
                 </div>
 
             </div>
 
         </div>
-        <!-- <Message :apartment_id="apartment.id"></Message> -->
-        <div class="container">
-        </div>
-
     </Default>
 </template>
 
@@ -101,7 +103,7 @@ export default {
             success: false,
             errors: null,
             apiKey: '5yE1GYuQA7WyAdPZ1zAeJtBq8cKtoae3',
-            // mapContainer: this.$refs.mapContainer
+            MessageSent: false
 
         };
     },
@@ -127,7 +129,10 @@ export default {
             console.log(data)
             axios.post("http://127.0.0.1:8000/api/messages", data)
                 .then((res) => {
-                    console.log(data, 'sono data')
+                    this.MessageSent = true
+                    this.name = '',
+                        this.email = '',
+                        this.text = ''
                 })
         },
         fetchMap() {
@@ -148,8 +153,6 @@ export default {
                 console.log(marker)
 
             })
-            // let marker = new tt.Marker().setLngLat(center)
-            // marker.addTo(map)
         },
         extraImagesLayout() {
             switch (this.apartment.images.length) {
@@ -171,30 +174,6 @@ export default {
                     break;
             }
         }
-        //     axios.get('https://api.tomtom.com/map/1/tile/basic/main/0/0/0.png',
-        //         {
-        //             params: {
-        //                 key: '5yE1GYuQA7WyAdPZ1zAeJtBq8cKtoae3',
-        //                 tileSize: 256,
-        //                 view: 'Unified',
-        //                 language: 'it-IT'
-        //             }
-        //         })
-        //         .then((res) => {
-        //             console.log(res.data)
-        //             this.map = res.data
-        //         })
-        // }
-        // // fetchApartment() {
-        // //     axios.get('http://127.0.0.1:8000/api/apartments/attico-moderno-con-vista-mozzafiato')
-        // //         .then((res) => {
-        // //             this.apartment = res.data.results
-        // //             console.log(this.apartment)
-        // //             console.log(res)
-        // //             this.apartmentAddress
-        // //         })
-        // // }
-
     },
     mounted() {
         this.fetchApartment();
@@ -249,7 +228,6 @@ export default {
 
 .ms_col-7 {
     max-height: 500px;
-    // margin-left: -0.75rem;
 }
 
 .extra-image-container {
@@ -263,9 +241,7 @@ export default {
         width: 100%;
         height: 50%;
 
-        // padding-top: 0.25rem;
         &:first-child {
-            // padding-bottom: 0.25rem;
             padding-top: 0;
         }
     }
@@ -273,13 +249,11 @@ export default {
     &.img-3 {
         width: 50%;
         height: 50%;
-        // padding-top: 0.25rem;
     }
 
     &.img-3:first-child {
         width: 100%;
         height: 50%;
-        // padding-bottom: 0.25rem;
         padding-top: 0;
     }
 
@@ -287,14 +261,11 @@ export default {
         width: 50%;
         height: 50%;
 
-        // padding-top: 0.25rem;
         &:first-child {
             padding-top: 0;
 
-            // padding-bottom: 0.25rem;
             &+div {
                 padding-top: 0;
-                // padding-bottom: 0.25rem;
             }
         }
     }
@@ -302,21 +273,13 @@ export default {
     &.img-5 {
         width: 50%;
         height: calc(100% / 3);
-        // padding-top: 0.25rem;
     }
 
     &.img-5:first-child {
         width: 100%;
         height: calc(100% / 3);
         padding-top: 0;
-        // padding-bottom: 0.25rem;
 
-        // & + div {
-        //     // padding-bottom: 0.25rem;
-        //     & + div {
-        //         // padding-bottom: 0.25rem;
-        //     }
-        // }
     }
 
     .extra-image {
@@ -340,7 +303,6 @@ export default {
     border-radius: 15px;
     color: white;
     margin-bottom: 36px;
-    // color: $secondary-color;
 }
 
 #map-container {
@@ -394,4 +356,24 @@ export default {
         padding: 5px 15px;
         border-radius: 999px;
     }
-}</style>
+
+}
+
+// messaggio pop-up
+
+.custom-message {
+    border: 2px solid white;
+    border-radius: 25px;
+    margin-bottom: 20px;
+    font-size: 16px;
+    width: 40%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.check {
+    color: $secondary-color;
+    font-size: 24px;
+}
+</style>
