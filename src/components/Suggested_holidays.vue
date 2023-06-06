@@ -2,7 +2,7 @@
     <section class="suggested_holidays_section">
 
         <div class="container">
-            <h2 class="title py-3 text-center text-md-start">Ispirazione per l'estate</h2>
+            <h2 class="title py-3 text-center text-md-start">Ispirazione per le tue vacanze </h2>
         </div>
 
         <div class="container">
@@ -68,6 +68,7 @@ export default {
 @use '../style/partials/variables.scss' as *;
 
 .suggested_holidays_section {
+    margin-bottom: 50px;
 
     .title {
         font-size: 26px;
@@ -133,6 +134,7 @@ export default {
 
     .ms-col {
         position: relative;
+        margin-bottom: 20px;
     }
 
 }

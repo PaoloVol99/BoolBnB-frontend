@@ -88,6 +88,11 @@ export default {
 @use '../style/partials/variables.scss' as *;
 
 .featured_accommodation_section {
+    margin-bottom: 50px;
+
+    .ms-col {
+        margin-bottom: 20px;
+    }
 
     .title {
         font-size: 26px;
