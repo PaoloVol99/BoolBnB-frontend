@@ -51,17 +51,33 @@
                         <form class=" messages-form" @submit.prevent="sendForm">
                             <h4>Manda un messaggio al proprietario</h4>
                             <div>
-                                <input type="text" v-model="name" id="name" name="name" placeholder="Il tuo nome">
+                                <div v-if="errors && errors.name">
+                                    <span class="text-danger" v-for="error in errors.name" :key="error">
+                                        {{ error }}
+                                    </span>
+                                </div>
+                                <input type="text" v-model="first_name" id="name" name="name" placeholder="Il tuo nome*">
                             </div>
                             <div>
+                                <div v-if="errors && errors.email">
+                                    <span class="text-danger" v-for="error in errors.email" :key="error">
+                                        {{ error }}
+                                    </span>
+                                </div>
                                 <input type="text" v-model="email" id="email" name="email"
-                                    placeholder="Il tuo indirizzo email">
+                                    placeholder="Il tuo indirizzo email*">
                             </div>
                             <div>
+                                <div v-if="errors && errors.text">
+                                    <span class="text-danger" v-for="error in errors.text" :key="error">
+                                        {{ error }}
+                                    </span>
+                                </div>
                                 <textarea type="text" v-model="text" id="text" name="text"
-                                    placeholder="Scrivi il tuo messaggio"></textarea>
+                                    placeholder="Scrivi il tuo messaggio*"></textarea>
                             </div>
                             <input class="d-none" type="number" v-model="apartment.id">
+
                             <button type="submit">Invia</button>
                         </form>
 
@@ -90,6 +106,8 @@ import axios from 'axios'
 import Default from '../layouts/Default.vue';
 import tt from '@tomtom-international/web-sdk-maps';
 import store from '../store';
+import { mapActions, mapState } from 'pinia';
+import { useAuthStore } from '../stores/auth';
 
 
 export default {
@@ -98,17 +116,23 @@ export default {
         return {
             apartment: {},
             store,
-            name: store.userName,
-            email: store.userEmail,
+            authStore: useAuthStore(),
+            first_name: '',
+            email: '',
             text: '',
             success: false,
             errors: null,
             apiKey: '5yE1GYuQA7WyAdPZ1zAeJtBq8cKtoae3',
-            MessageSent: false
+            MessageSent: false,
+            errors: null,
 
         };
     },
+    computed: {
+        ...mapState(useAuthStore, ['user']),
+    },
     methods: {
+        ...mapActions(useAuthStore, ['getUser']),
         fetchApartment() {
             console.log("slug", this.slug)
             axios.get(`http://127.0.0.1:8000/api/apartments/${this.slug}`)
@@ -122,19 +146,27 @@ export default {
         },
         sendForm() {
             let data = {
-                name: this.name,
+                name: this.first_name,
                 email: this.email,
                 text: this.text,
                 apartment_id: this.apartment.id,
             }
             console.log(data)
-            axios.post("http://127.0.0.1:8000/api/messages", data)
+            axios.post("http://localhost:8000/api/messages", data)
                 .then((res) => {
-                    console.log(data)
-                    this.MessageSent = true
-                    this.name = '',
-                        this.email = '',
-                        this.text = ''
+                    console.log(res)
+                    const { success, errors } = res.data
+                    if (success) {
+                        this.MessageSent = true
+                        this.first_name = '',
+                            this.email = '',
+                            this.text = ''
+                        this.errors = ''
+                    } else {
+                        this.errors = errors
+                    }
+                }).catch(err => {
+                    console.log(err)
                 })
         },
         fetchMap() {
@@ -177,8 +209,15 @@ export default {
             }
         }
     },
+    created() {
+        if (this.user) {
+            this.first_name = this.user.first_name;
+            this.email = this.user.email;
+        };
+    },
     mounted() {
         this.fetchApartment();
+        this.getUser()
     },
     components: { Default }
 }

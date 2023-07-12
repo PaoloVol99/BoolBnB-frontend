@@ -13,22 +13,35 @@
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNav">
-                <ul class="navbar-nav align-items-center">
+                <ul class="navbar-nav align-items-center gap-2">
 
                     <li class="nav-item mx-2">
-                        <router-link class="nav-link active" :to="{ name: 'home' }">Home</router-link>
+                        <router-link class="nav-link active p-0" :to="{ name: 'home' }">Home</router-link>
                     </li>
 
                     <li class="nav-item mx-2">
-                        <router-link class="nav-link active" :to="{ name: 'ricerca-avanzata' }">Ricerca
+                        <router-link class="nav-link active p-0" :to="{ name: 'ricerca-avanzata' }">Ricerca
                             avanzata</router-link>
                     </li>
 
-                    <li class="nav-item mx-2">
+                    <li class="nav-item">
+                        <a v-if="user" class="nav-link submit-bottom active rounded-3 userName" aria-current="page"
+                            href="http://localhost:8000/dashboard">{{ user.first_name }}</a>
 
-                        <a class="nav-link submit-bottom active rounded-3" aria-current="page" @click="PresetUser"
+                        <router-link v-else class="nav-link submit-bottom active rounded-3"
+                            :to="{ name: 'login' }">Accedi</router-link>
+
+                        <!-- <a class="nav-link submit-bottom active rounded-3" aria-current="page" @click="PresetUser"
                             href="http://127.0.0.1:8000/register">{{ this.store.userName ? this.store.userName : 'Iscriviti'
-                            }}</a>
+                            }}</a> -->
+                    </li>
+
+                    <li class="nav-item">
+                        <a v-if="user" class="nav-link submit-bottom active rounded-3" aria-current="page" href="#"
+                            @click.prevent="handleLogout">Logout</a>
+
+                        <router-link v-else class="nav-link submit-bottom active rounded-3"
+                            :to="{ name: 'register' }">Iscriviti</router-link>
                     </li>
 
                 </ul>
@@ -39,19 +52,32 @@
 
 <script>
 import store from '../store';
+import { useRouter } from "vue-router";
+import { mapActions, mapState } from 'pinia';
+import { useAuthStore } from '../stores/auth';
 
 export default {
     data() {
         return {
-            store
+            store,
+            useRouter,
+            authStore: useAuthStore()
         }
     },
+    computed: {
+        ...mapState(useAuthStore, ['user'])
+    },
+
     methods: {
-        PresetUser() {
-            this.store.userName = '',
-                this.store.userEmail = ''
-        }
-    }
+        ...mapActions(useAuthStore, ['handleLogout'])
+
+        //PresetUser() {
+        //         this.store.userName = '',
+        //             this.store.userEmail = ''
+        //     }
+        // }
+    },
+
 }
 
 </script>
@@ -91,5 +117,9 @@ export default {
 .submit-bottom {
     background-color: #177E89;
     color: rgb(247, 247, 247) !important;
+}
+
+.userName {
+    text-transform: capitalize;
 }
 </style>
